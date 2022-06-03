@@ -15,7 +15,7 @@ const Payment = require('../models/paymentModel');
 const Product = require('../models/products');
 
 
-var name, amount, phone, user_id, products, country, state, pincode, address, order_id, payment_mode,pro = [], quantity=[], id;
+var name, amount, phone, user_id, products, country, state, pincode, address, order_id, payment_mode,pro = [], quantity=[];
 router.post("/paynow", [parseUrl, parseJson], async (req, res) => {
   // Route for making payment
   var paymentDetails = {
