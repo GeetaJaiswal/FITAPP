@@ -27,6 +27,7 @@
 
     <!-- SLIDER REVOLUTION 4.x CSS SETTINGS -->
     <link rel="stylesheet" type="text/css" href="rs-plugin/css/settings.css" media="screen" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
 
 
 </head>
@@ -57,9 +58,7 @@
                         <!-- Tittle -->
                         <div class="tittle">
                             <h4>contact us</h4>
-                            <p>He's a demon on wheels. The mate was a mighty sailin' man the Skipper brave and sure.
-                                Five passengers set sail that day for a three hour tour a three hour tour the ship set
-                                ground on the shore of this uncharted</p>
+                            <p>Email us if you have any query. We would be happy to answer your questions and set up a meeting with you.</p>
                         </div>
                         <div class="row">
 
@@ -101,7 +100,7 @@
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="media-heading">e-mail</h6>
-                                                <p>Info@Ourdomain.com </p>
+                                                <p>Info@fitapp.com </p>
                                             </div>
                                         </li>
                                     </ul>
@@ -132,7 +131,7 @@
                                             </li>
                                             <li class="col-sm-6">
                                                 <label>
-                                                    <input type="text" class="form-control" name="subject" id="website"
+                                                    <input type="text" class="form-control" name="subject" id="subject"
                                                         placeholder="SUBJECT" required>
                                                 </label>
                                             </li>
@@ -171,8 +170,10 @@
     <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.tools.min.js"></script>
     <script type="text/javascript" src="rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
 
     <script>
+        var notyf = new Notyf();
     const form = document.getElementById('contactForm')
     form.addEventListener('submit', submitContactForm)
 
@@ -190,14 +191,29 @@
 				success: function (res) {
 					if(res.data=='ok') {
 					    notyf.success({
-					        message: 'Password has been changed',
+					        message: 'Query Sent Successfully',
 					        duration: 2000,
 					        position: {
 					            x: 'right',
 					            y: 'top',
 					        },
 					    })
+                        $('#name').val('');
+                        $('#email').val('');
+                        $('#contact').val('');
+                        $('#subject').val('');
+                        $('#message').val('');
 					}
+                    else {
+                        notyf.error({
+					        message: 'Unable to send your Query, Try again!',
+					        duration: 2000,
+					        position: {
+					            x: 'right',
+					            y: 'top',
+					        },
+					    })
+                    }
 				}
 			})
 		}

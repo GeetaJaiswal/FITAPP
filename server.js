@@ -157,13 +157,13 @@ app.post('/api/register', async (req, res) => {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'geetaverma6653@gmail.com',
-                pass: 'nclmkfdhwpswmybj'
+                user: process.env.EMAIL_ID,
+                pass: process.env.EMAIL_SECRET_PASS
             }
         });
 
         var mailOptions = {
-            from: 'geetaverma6653@gmail.com',
+            from: process.env.EMAIL_ID,
             to: req.body.registerEmail,
             subject: 'Verification Code',
             html: '<h1>Hi, ' + req.body.registerName + '</h1><p>Your verification code is ' + otp + '</p>',
@@ -702,6 +702,38 @@ app.get('/contact', async(req, res)=>{
 //     }
 // })
 
+
+app.post('/contact', async(req, res) => {
+    try {
+        data = req.body;
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL_ID,
+                pass: process.env.EMAIL_SECRET_PASS
+            }
+        });
+        var mailOptions = {
+            from: process.env.EMAIL_ID,
+            to: process.env.EMAIL_ID,
+            subject: 'Query',
+            html: '<p>Name:  ' + data.name+ '</p><p>Email:  ' + data.email+ '</p><p>Contact:  ' + data.contact+ '</p><p>Subject:  ' + data.subject+ '</p><p>Message:  ' + data.message+ '</p>'
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
+
+        res.json({data:'ok'});
+    }
+    catch(e) {
+        res.status(400).send(e);
+    }
+})
 
 // ################# shop ############################
 
