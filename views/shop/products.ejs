@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Products</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop/css/bootstrap.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="/shop/css/font-awesome.min.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="/shop/css/elegant-icons.css" type="text/css"> -->
+    <link rel="stylesheet" href="/shop/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="/shop/css/simplePagination.css">
+
+    <script>
+         //category filter
+         function category(cat) {
+            category=cat;
+            $.ajax({
+                type: 'POST',
+                url: '/categoryFilter',
+                data: {category:category},
+                success: function(res){
+                    productCol = ' ';
+                    $('#productSection').html(' ');
+                        for(i=0; i<res.product.length; i++){
+                            $('#productSection').html('<div class="col-lg-4 col-md-6 col-sm-6"><div class="product__item"><div class="product__item__pic set-bg" data-setbg="/uploads/'+res.product[i].image+'"  style="background-image: url(/uploads/'+res.product[i].image+');"><ul class="product__item__pic__hover"><li><a href="#"><i class="fa fa-heart"></i></a></li><li><a href="#" onclick="addToCart(\''+res.product[i]._id+'\')"><i class="fa fa-shopping-cart"></i></a></li></ul></div><div class="product__item__text"><h6><a href="/product/'+res.product[i]._id+'" target="_blank">'+res.product[i].product_name+'</a></h6><span class="mr-3"><del>₹'+res.product[i].sale_price+'</del></span><span><b>₹'+res.product[i].regular_price+'</b></span></div></div></div>')
+                        }
+                }
+            })
+        }
+    </script>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+    <!-- navbar -->
+    <%- include('../partials/head.ejs') %>
+
+    <!-- Product Section Begin -->
+    <div class="container d-lg-none d-block">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="sidebar">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="sidebar__item">
+                                <!-- <h5><b>Filter by Category</b></h5> -->
+                                <ul>
+                                    <div class="d-flex justify-content-between">
+                                            <li><a href="/products">All</a></li>
+                                            <li><a href="#" onclick="category('Shoes')">Shoes</a></li>
+                                            <li><a href="#" onclick="category('Dumbbell')">Dumbbell</a></li>
+                                        
+                                            <li><a href="#" onclick="category('Watch')">Watch</a></li>
+                                            <li><a href="#" onclick="category('T-Shirt')">Shirt</a></li>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- <div class="col-12">
+                            <div class="sidebar__item">
+                                <h5><b>Filter by Price</b></h5>
+                                <div class="price-range-wrap mt-4">
+                                    <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                        data-min="10" data-max="9999">
+                                        <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                        <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                        <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                    </div>
+                                    <div class="range-slider">
+                                        <div class="price-input" oninput="priceFilter()">
+                                            <input type="text" id="minamount">
+                                            <input type="text" id="maxamount">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>      
+    </div>    
+    
+    <section class="product spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-5 d-lg-block d-none">
+                    <div class="sidebar">
+                        <div class="sidebar__item">
+                            <h4>Category</h4>
+                            <ul>
+                                <li><a href="/products">All</a></li>
+                                <li><a href="#" onclick="category('Shoes')">Shoes</a></li>
+                                <li><a href="#" onclick="category('Dumbbell')">Dumbbell</a></li>
+                                <li><a href="#" onclick="category('Watch')">Watch</a></li>
+                                <li><a href="#" onclick="category('T-Shirt')">Shirt</a></li>
+                            </ul>
+                        </div>
+                        <!-- <div class="sidebar__item">
+                            <h4>Price</h4>
+                            <div class="price-range-wrap">
+                                <div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                                    data-min="10" data-max="9999">
+                                    <div class="ui-slider-range ui-corner-all ui-widget-header"></div>
+                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+                                </div>
+                                <div class="range-slider">
+                                    <div class="price-input" oninput="priceFilter()">
+                                        <input type="text" id="minamount">
+                                        <input type="text" id="maxamount">
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <div class="sidebar__item">
+                            <div class="latest-product__text">
+                                <h4>Latest Products</h4>
+                                <div class="latest-product__slider owl-carousel">
+                                    <% if(limitProducts){ 
+                                        for(i=0;i<limitProducts.length;i=i+2){%>
+                                    <div class="latest-prdouct__slider__item">
+                                        <a href="/product/<%- limitProducts[i]._id %>" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="/uploads/<%- limitProducts[i].image %>" alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6><%- limitProducts[i].product_name %></h6>
+                                                <span><del class="text-muted font-weight-normal pr-2">₹<%- limitProducts[i].sale_price %></del>₹<%- limitProducts[i].regular_price %></span>
+                                            </div>
+                                        </a>
+                                        <a href="/product/<%- limitProducts[i+1]._id %>" class="latest-product__item">
+                                            <div class="latest-product__item__pic">
+                                                <img src="uploads/<%- limitProducts[i+1].image %>" alt="">
+                                            </div>
+                                            <div class="latest-product__item__text">
+                                                <h6><%- limitProducts[i+1].product_name %></h6>
+                                                <span><del class="text-muted font-weight-normal pr-2">₹<%- limitProducts[i+1].sale_price %></del>₹<%- limitProducts[i+1].regular_price %></span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <% } } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-9 col-md-7 px-md-5">
+                    <div class="row list-wrapper" id="productSection">
+                        <% if(products) {
+                            products.forEach(item => { %>
+                        <div class="col-lg-4 col-md-6 col-6 list-item">
+                            <div class="product__item">
+                                <div class="product__item__pic set-bg" data-setbg="/uploads/<%- item.image %>">
+                                    <ul class="product__item__pic__hover">
+                                        <!-- <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
+                                        <!-- <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
+                                        <li><a href="#" onclick="addToCart('<%- item._id %>')"><i class="fa fa-shopping-cart"></i></a></li>
+                                    </ul>
+                                </div>
+                                <div class="product__item__text">
+                                    <h6><a href="/product/<%- item._id %>" target="_blank"><%- item.product_name %></a></h6>
+                                    <span class="mr-3"><del>₹<%- item.sale_price %></del></span><span><b>₹<%- item.regular_price %></b></span>
+                                </div>
+                            </div>
+                        </div>
+                        <% }) } else { %>
+
+                            <div class="col-lg-4 col-md-6 col-sm-6">
+                                <div class="container">
+                                    <h4>Products not Available</h4>
+                                </div>
+                            </div>
+
+                        <% } %>
+                    </div>
+                    
+                    <div class="d-flex justify-content-end mb-5">
+                        <div id="pagination-container-mobile d-lg-none d-block "></div>
+                    </div>
+
+                    <!-- ### mobile ### -->
+                    <div class="col-lg-3 col-md-5 d-block d-lg-none">
+                        <div class="sidebar">
+                            <div class="sidebar__item">
+                                <div class="latest-product__text">
+                                    <h4>Latest Products</h4>
+                                    <div class="latest-product__slider owl-carousel">
+                                        <% if(limitProducts){ 
+                                            for(i=0;i<limitProducts.length;i=i+2){%>
+                                        <div class="latest-prdouct__slider__item">
+                                            <a href="/product/<%- limitProducts[i]._id %>" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="/uploads/<%- limitProducts[i].image %>" alt="">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6><%- limitProducts[i].product_name %></h6>
+                                                    <span><del class="text-muted font-weight-normal pr-2">₹<%- limitProducts[i].sale_price %></del>₹<%- limitProducts[i].regular_price %></span>
+                                                </div>
+                                            </a>
+                                            <a href="/product/<%- limitProducts[i+1]._id %>" class="latest-product__item">
+                                                <div class="latest-product__item__pic">
+                                                    <img src="uploads/<%- limitProducts[i+1].image %>" alt="">
+                                                </div>
+                                                <div class="latest-product__item__text">
+                                                    <h6><%- limitProducts[i+1].product_name %></h6>
+                                                    <span><del class="text-muted font-weight-normal pr-2">₹<%- limitProducts[i+1].sale_price %></del>₹<%- limitProducts[i+1].regular_price %></span>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <% } } %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="d-flex justify-content-end ">
+                        <div id="pagination-container" class="d-none d-lg-block"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Section End -->
+
+   <!-- footer -->
+   <%- include('../partials/footer.ejs') %>
+
+    <!-- Js Plugins -->
+    <script src="/shop/js/jquery-3.3.1.min.js"></script>
+    <script src="/shop/js/jquery.simplePagination.js"></script>
+    <script src="/shop/js/bootstrap.min.js"></script>
+    <script src="/shop/js/jquery.nice-select.min.js"></script>
+    <script src="/shop/js/jquery-ui.min.js"></script>
+    <script src="/shop/js/jquery.slicknav.js"></script>
+    <script src="/shop/js/mixitup.min.js"></script>
+    <script src="/shop/js/owl.carousel.min.js"></script>
+    <script src="/shop/js/main.js"></script>
+    <script src="/shop/js/pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <script>
+        var notyf = new Notyf();
+        function addToCart(id) {
+            pId = id;
+            size = ' ';
+            quantity = 1;
+            $.ajax({
+                type: 'POST',
+                url: '/checkCart',
+                data: {productId:pId, quantity:quantity, size:size},
+                success: function(res){
+                    if(res.data=='ok') {
+                        notyf.success({
+                            message: 'Added to cart <a href="/cart" class="ml-2">Check Cart</a>',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+
+                        })
+                        // alert('Inserted');
+                    }
+                    else if(res.data=='updated') {
+                         notyf.success({
+                            background: 'green',
+                            message: 'Added to cart <a href="/cart" class="ml-2">Check Cart</a>',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+
+                        })
+                        // alert('Updated');
+                    }
+                    else if(res.data=='err') {
+                        notyf.success({
+                            background: 'orange',
+                            message: 'There is some error',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'bottom',
+                            },
+
+                        })
+                        // alert('Some Error');
+                    }
+                    else {
+                        notyf.error({
+                            message: 'Please Login to add Product into the cart <a href="/login" class="ml-2">Click Here</a>',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+
+                        })
+                        // alert('login please');
+                    }
+                }
+            })
+        }
+
+
+       
+
+
+
+    // ######## pagination ########    
+    var items = $(".list-wrapper .list-item");
+    var numItems = items.length;
+    var perPage = 6;
+
+    items.slice(perPage).hide();
+
+    $('#pagination-container').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+        }
+    });
+
+    $('#pagination-container-mobile').pagination({
+        items: numItems,
+        itemsOnPage: perPage,
+        prevText: "&laquo;",
+        nextText: "&raquo;",
+        onPageClick: function (pageNumber) {
+            var showFrom = perPage * (pageNumber - 1);
+            var showTo = showFrom + perPage;
+            items.hide().slice(showFrom, showTo).show();
+        }
+    });
+
+
+
+    </script>
+
+
+
+</body>
+
+</html>

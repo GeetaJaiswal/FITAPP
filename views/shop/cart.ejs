@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Ogani Template">
+        <meta name="keywords" content="Ogani, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Cart</title>
+    
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/shop/css/bootstrap.min.css" type="text/css">
+        <!-- <link rel="stylesheet" href="/shop/css/font-awesome.min.css" type="text/css"> -->
+        <!-- <link rel="stylesheet" href="/shop/css/elegant-icons.css" type="text/css"> -->
+        <link rel="stylesheet" href="/shop/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/style.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+    
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+
+     <!-- navbar -->
+     <%- include('../partials/head.ejs') %>
+<% if(cart=='ok'){ %>
+    <!-- Shoping Cart Section Begin -->
+    <section class="shoping-cart spad"  id="cartTable">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% let j=0; for(i=0;i<cartDetails.length;i++){ %>
+                                    <% let pro = "proQuantity"+i;
+                                       let proTotal = "proTotal"+i;
+                                    %>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <a href="/product/<%- cartDetails[i][0]._id %>"><img src="/uploads/<%- cartDetails[i][0].image %>" alt="" width="50px"></a>
+                                        <a href="/product/<%- cartDetails[i][0]._id %>"><h5><%- cartDetails[i][0].product_name %></h5></a>
+                                    </td>
+                                    <td class="shoping__cart__price font-weight-normal">
+                                        ₹<%- cartDetails[i][0].regular_price.toLocaleString() %>
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <span class="dec qtybtn" onclick="qtyChange('<%- cartDetails[i][0]._id %>','<%- pro %>','<%- cartDetails[i][0].regular_price %>','<%- proTotal %>','minus')">-</span>
+                                                <input type="text" value="<%- quantity[j] %>" id=<%- pro %>>
+                                                <span class="inc qtybtn" onclick="qtyChange('<%- cartDetails[i][0]._id %>','<%- pro %>','<%- cartDetails[i][0].regular_price %>','<%- proTotal %>','plus')">+</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total" id=<%- proTotal %>>
+                                        ₹ <%- (cartDetails[i][0].regular_price * quantity[j]).toLocaleString() %>
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <i class="fas fa-times text-danger" onclick="deleteItem('<%- cartDetails[i][0]._id %>')" style="cursor:pointer"></i>
+                                    </td>
+                                </tr>
+                                <% j++; }  %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-end">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <!-- <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a> -->
+                        <a href="/products" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            CONTINUE SHOPPING</a>
+                    </div>
+                </div>
+                <!-- <div class="col-lg-6">
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Discount Codes</h5>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your coupon code">
+                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            </form>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
+                        <ul>
+                            <li>Subtotal <span id="subTotal">₹<%- subtotal.toLocaleString() %></span></li>
+                            <li>Total <span id="total">₹<%- subtotal.toLocaleString() %></span></li>
+                        </ul>
+                        <a href="/checkout" class="primary-btn">PROCEED TO CHECKOUT</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shoping Cart Section End -->
+<% } %>
+
+    <!-- Empty Cart --->
+    <% if(cart=='emptyCart'){ %>
+        <div class="h-100 d-flex justify-content-center align-items-center flex-column">
+            <h3>Cart is Empty 😟</h3>
+            <img src="/shop/img/products/empty-cart.png!bw700" alt="empty-cart" width="40%">
+            <a href="/products"><button class="primary-btn border-0">Continue Shopping</button></a>
+        </div>
+    <% } %>
+
+    <!-- Not Login Cart --->
+    <% if(cart=='notLogin'){ %>
+        <div class="h-100 d-flex justify-content-center align-items-center flex-column">
+            <h2>Login to access your cart</h2>
+            <img src="/shop/img/products/login (1).gif" alt="empty-cart" width="50%">
+            <a href="/login"><button class="primary-btn border-0">Login Here</button></a>
+        </div>
+    <% } %>
+
+
+    <!-- footer -->
+    <%- include('../partials/footer.ejs') %>
+
+
+    <!-- Js Plugins -->
+    <script src="/shop/js/jquery-3.3.1.min.js"></script>
+    <script src="/shop/js/bootstrap.min.js"></script>
+    <script src="/shop/js/jquery.nice-select.min.js"></script>
+    <script src="/shop/js/jquery-ui.min.js"></script>
+    <script src="/shop/js/jquery.slicknav.js"></script>
+    <script src="/shop/js/mixitup.min.js"></script>
+    <script src="/shop/js/owl.carousel.min.js"></script>
+    <script src="/shop/js/main.js"></script>
+
+
+    <script>
+    function qtyChange(id, qtyId, price, tId, op){
+        cartId = id;
+        QtyId = qtyId;
+        proPrice = price;
+        proTotalId = tId;
+        operator = op;
+        if(operator=='plus'){
+            quantity = parseInt($('#'+QtyId).val())+1;
+        }
+        else {
+            quantity = parseInt($('#'+QtyId).val())-1;
+        }
+        productPrice = $('#'+proPrice).val();
+        $.ajax({
+            type: 'POST',
+            url: '/cartUpdate',
+            data: {proId:cartId, quantity:quantity},
+            success: function(res){
+                if(res.data=='ok'){
+                    pPrice = quantity*proPrice;
+                    $('#'+proTotalId).val(pPrice);
+                    $('#subTotal').text("₹"+res.subtotal.toLocaleString());
+                    $('#total').text("₹"+(res.subtotal).toLocaleString());
+                    $('#cartTable').load(' #cartTable');
+                }
+            }   
+        })
+    }
+
+    //delete cart item
+    function deleteItem(id){
+        $.ajax({
+            type: 'POST',
+            url: '/deleteCartItem',
+            data: {proId:id},
+            success: function(res){
+                if(res.data=='ok'){
+                    $('#cartTable').load(' #cartTable');
+                }
+            }   
+        })
+    }
+    </script>
+
+
+</body>
+
+</html>

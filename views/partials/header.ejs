@@ -1,0 +1,122 @@
+<header class="header" id="header">
+    <div class="header_toggle"> <i class='bx bx-menu' id="header-toggle"></i>
+        <img src="images/logo.png" class="main-logo">
+    </div>
+    <div class="d-flex align-items-center">
+        <!-- <i class="fas fa-bell mx-5">
+            <span class="position-absolute start-99 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 10px;">
+                5
+            </span>
+        </i> -->
+
+        <div>
+            <li class="nav-item dropdown dropdown-large" style="list-style: none;">
+                <a class="nav-link dropdown-toggle-nocaret mx-3
+            position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <!-- <span class="alert-count">4</span> -->
+                    <i class="fas fa-bell fontawesome-icons"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-end p-3">
+                    <div class="msg-header d-flex justify-content-between">
+                        <p class="msg-header-title">Notifications</p>
+                        <!-- <p class="msg-header-clear ms-auto">Marks all as read</p> -->
+                    </div>
+                    <div class="header-notifications-list">
+                        <a class="dropdown-item" href="javascript:;">
+                            <div class="row d-flex justify-content-between flex-lg-nowrap">
+                                <div class="col-lg-2 notify bg-light-primary text-primary float-start fs-3"><i
+                                        class="bx bx-group fontawesome-icons"></i></div>
+                                <div class="col-lg-8 float-start">
+                                    <h6 class="msg-name">Customer <p class="msg-info pt-2">5 new user registered</p>
+                                    </h6>
+                                </div>
+                                <div class="col-lg-2"><span class="msg-time float-end">14 Sec ago</span></div>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="javascript:;">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-lg-2 notify bg-light-danger text-danger float-start fs-3"><i
+                                        class="bx bx-cart-alt fontawesome-icons"></i></div>
+                                <div class="col-lg-8 float-start">
+                                    <h6 class="msg-name">New Orders<p class="msg-info pt-2">You have recived new orders
+                                        </p>
+                                    </h6>
+                                </div>
+                                <div class="col-lg-2"><span class="msg-time float-end">14 Sec ago</span></div>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="javascript:;">
+                            <div class="row d-flex justify-content-between">
+                                <div class="col-lg-2 notify bg-light-danger text-danger float-start fs-3"><i
+                                        class="bx bx-user-pin fontawesome-icons"></i></div>
+                                <div class="col-lg-8 float-start">
+                                    <h6 class="msg-name">New authors<p class="msg-info pt-2">24 new authors joined</p>
+                                    </h6>
+                                </div>
+                                <div class="col-lg-2"><span class="msg-time float-end">1 day ago</span></div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </li>
+
+        </div>
+
+
+        <% if(!users.filename) { %>
+        <div class="header_img">
+            <div class="profile-img-header"> 
+                <h4 class="text-white"><%- users.name.substring(0,1) %></h4>
+                <!-- <img src="https://i.imgur.com/hczKIze.jpg" alt="profile"> -->
+            </div> 
+        </div>       
+        <% } else { %>  
+            <div class="header_img">
+                    <img src="uploads/<%- users.filename %>" alt="profile"> 
+            </div>
+        <% } %>  
+
+        <div>
+            <li class="nav-item dropdown dropdown-large" style="list-style: none;">
+                <a class="nav-link dropdown-toggle dropdown-toggle-nocaret
+                position-relative" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:#dd9d25">
+                </a>
+                <div class="dropdown-menu notification-dropdown dropdown-menu-end p-1">
+                    <div class="header-notifications-list">
+                        <a class="dropdown-item" href="/profile">
+                            <div class="row d-flex justify-content-between align-items-center flex-lg-nowrap">
+                                <div class="col-2 notify bg-light-primary text-primary fs-3 mx-lg-1"><i
+                                        class="bx bx-group fontawesome-icons"></i></div>
+                                <div class="col-9">Profile</div>
+                            </div>
+                        </a>
+                        <a class="dropdown-item" href="/">
+                            <div class="row d-flex justify-content-between align-items-center flex-lg-nowrap">
+                                <div class="col-2 notify bg-light-danger text-danger fs-3 mx-lg-1"><i
+                                        class="bx bx-cart-alt fontawesome-icons"></i></div>
+                                <div class="col-9">Home</div>
+                            </div>
+                        </a>
+                        <form action="/logout" class="dropdown-item" method="post" id="gen-logout">
+                            <div class="row d-flex justify-content-between align-items-center flex-lg-nowrap">
+                                <div class="col-2 notify bg-light-danger text-danger fs-3 mx-lg-1">
+                                    <i class="fas fa-sign-out-alt  fontawesome-icons
+                                    fontawesome-icons"></i></div>
+                                <div class="col-9">
+                                    <button type="submit" class="dropdown-item dropdown-logout p-0 shadow-none bg-none border-0" href="#">Logout</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </li>
+
+        </div>
+
+
+        <!-- </form> -->
+    </div>
+
+
+</header>

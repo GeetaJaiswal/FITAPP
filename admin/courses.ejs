@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+        type="text/css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+
+</head>
+
+<body id="body-pd">
+
+    <%- include('../partials/admin-header') %>
+
+        <div class="l-navbar" id="nav-bar">
+            <div class="d-block d-sm-none d-flex justify-content-end">
+                <i class="bx bx-menu bx-x text-white fs-5" id="s-menu"></i>
+            </div>
+            <nav class="nav">
+                <div>
+                    <div class="nav_list mt-lg-5">
+                        <a href="/admin/dashboard" class="nav_link">
+                            <i class='bx bx-grid-alt nav_icon'></i>
+                            <span class="nav_name">Dashboard</span>
+                        </a>
+                        <a href="/admin/student-details" class="nav_link">
+                            <i class='fas fa-users nav_icon'></i>
+                            <span class="nav_name">Student Details</span>
+                        </a>
+                        <a href="/admin/courses" class="nav_link active">
+                            <i class='fas fa-chalkboard-teacher nav_icon'></i>
+                            <span class="nav_name">Courses</span>
+                        </a>
+                        <a href="#" class="nav_link">
+                            <i class='bx bx-message-square-detail nav_icon'></i>
+                            <span class="nav_name">Assignment Task</span>
+                        </a>
+                        <a href="#" class="nav_link">
+                            <i class='bx bx-bookmark nav_icon'></i>
+                            <span class="nav_name">Practice Links</span>
+                        </a>
+                        <a href="#" class="nav_link">
+                            <i class='bx bx-folder nav_icon'></i>
+                            <span class="nav_name">Add Quiz</span>
+                        </a>
+                    </div>
+                </div>
+                <form action="/admin/logout" method="post">
+                    <a href="#" class="nav_link">
+                        <button type="submit" class="sidebar-logout p-0 shadow-none"><i class='bx bx-log-out nav_icon me-4'></i>SignOut</button>
+                    </a>
+                </form>
+            </nav>
+        </div>
+
+
+
+        <!--Container Main start-->
+        <div class="height-100 p-lg-3">
+            
+            <!-- <h4>Main Components</h4> -->
+            <div class="container">
+                <div class="d-flex justify-content-end">
+                    <a href="/admin/add-course"><i class="fas fa-plus admin-courses-add-icon text-primary"></i></a>
+                </div>
+                <% courses.forEach(function(course) { %>
+                <div class="col-lg-12 border-box p-4 mb-4">
+                    <h5><b><%- course.course_name %></b></h5>
+                    <p><%- course.course_description %></p>
+                    <div class="d-flex justify-content-between">
+                        <p><b>Price:</b>  Rs. <%- course.course_price %></p>
+                        <p><b>Date:</b>  <%- course.course_date %></p>
+                        <p><b>Time:</b>  <%- course.course_time %></p>
+                        <p><b>No. Of Classes:</b> <%- course.no_of_classes %></p>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a href="/admin/update-course/<%- course._id %>"><i class="fas fa-pen-alt p-2 mx-2 text-primary"></i></a>
+                        <a href="/admin/course/delete/<%- course._id %>"><i class="fas fa-trash-alt p-2 mx-2 text-danger"></i></a>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+
+
+ 
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="../js/custom.js"></script>
+</body>
+
+</html>
+

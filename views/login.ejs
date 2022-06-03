@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+  <script src="https://kit.fontawesome.com/dd8c49730d.js" crossorigin="anonymous"></script>
+  <title>Login</title>
+
+  <style>
+    /* login signup */
+    /* @import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap"); */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #111;
+      color: #ccc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-image: url(images/1.jpg);
+      background-size: cover;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 800;
+      /* font-family: "Roboto", sans-serif; */
+      font-family: 'Noto Sans', sans-serif;
+    }
+
+    span {
+      font-size: 12px;
+      color: beige;
+      font-family: "Roboto Condensed", sans-serif;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 20px;
+      letter-spacing: 0.5px;
+      margin: 20px 0 30px;
+      font-family: "Roboto", sans-serif;
+    }
+
+    a {
+      color: #fff;
+      font-size: 14px;
+      text-decoration: none;
+      margin: 15px 0;
+    }
+
+    .container {
+      position: absolute;
+      /* box-shadow: 2.8px 2.8px 2.2px #05050594, 8px 9px 9px #00000017, 9px 10px 10px #00000017, 7px 9px 11px #00000017, 7px 7px 2px #00000017, 6px 11px 13px #000; */
+      overflow: hidden;
+      min-height: 500px;
+      width: 768px;
+      max-width: 100%;
+      opacity: 0.8;
+    }
+
+    .form-container {
+      background: rgba(45, 52, 54, 1);
+      display: flex;
+      flex-direction: column;
+      padding: 0 50px;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .social-container {
+      margin: 20px 0;
+    }
+
+    .social-container a {
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 5px;
+      height: 40px;
+      width: 40px;
+    }
+
+    .form-container input {
+      background: #eee;
+      border: none;
+      padding: 12px 15px;
+      margin: 8px 0;
+      width: 100%;
+    }
+
+    button {
+      color: #fff;
+      font-size: 12px;
+      font-weight: bold;
+      padding: 12px 35px;
+      margin-top: 15px;
+      border: 0;
+      border-radius: 20px;
+      text-transform: uppercase;
+      transition: transform 80ms ease-in;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 240px;
+      text-align: center;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #fff;
+      font-family: "Roboto", sans-serif;
+      font-size: 16px;
+      font-weight: 200px;
+      padding: 10px 0;
+      transition: border 0.5s;
+      outline: none;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    button:focus {
+      outline: none;
+    }
+
+    .ghost {
+      background: transparent;
+      border-color: #044782;
+      background-color: #044782;
+    }
+
+    .form-container {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      transition: all 0.6s ease-in-out;
+    }
+
+    .sign-in-container {
+      width: 50%;
+      z-index: 2;
+    }
+
+    .sign-up-container {
+      left: 0;
+      width: 50%;
+      z-index: 0;
+      opacity: 0;
+    }
+
+    #forgot-pass,
+    #forgot-pass-otp,
+    #forgot-pass-otp-newpass,
+    #submit-otp {
+      display: none;
+    }
+
+    .overlay-container {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 50%;
+      height: 100%;
+      overflow: hidden;
+      transition: transform 0.6s ease-in-out;
+      z-index: 100;
+    }
+
+    .overlay {
+      background: transparent;
+      background: linear-gradient(to right, #ff4b2b, #ff416c) no repeat 0 0 / cover;
+      color: #fff;
+      position: absolute;
+      left: -100%;
+      height: 100%;
+      width: 200%;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .overlay-panel {
+      position: absolute;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 40px;
+      height: 100%;
+      width: 50%;
+      text-align: center;
+      transform: translateX(0);
+      transition: transform 0.6s ease-in-out;
+    }
+
+    .overlay-right {
+      right: 0;
+      transform: translateX(0);
+    }
+
+    .overlay-left {
+      transform: translateX(-20%);
+    }
+
+    .container.right-panel-active .sign-in-container {
+      transform: translateX(100%);
+    }
+
+    .container.right-panel-active .overlay-container {
+      transform: translateX(-100%);
+    }
+
+    .container.right-panel-active .sign-up-container {
+      transform: translateX(100%);
+      opacity: 1;
+      z-index: 5;
+    }
+
+    .container.right-panel-active .overlay {
+      transform: translateX(50%);
+    }
+
+    .container.right-panel-active .overlay-left {
+      transform: translateX(0);
+    }
+
+    .container.right-panel-active .overlay-right {
+      transform: translateX(20%);
+    }
+
+    label.btn.btn-outline-primary {
+      padding: 10px 50px;
+      border: 1px solid white;
+      color: white;
+    }
+
+    .btn-check:checked+.btn-outline-primary, .btn-outline-primary:hover {
+      background-color: #dd9d25;
+      border-color: #dd9d25;
+    }
+
+    .signup-form-div, .login-form-div {
+      opacity: 0.8; 
+      background-color: rgba(45, 52, 54, 1);
+    }
+
+    @media (min-width: 450px) {
+      button.sUp, button.sIn {
+        display: none;
+      }
+    }
+
+    @media (max-width: 450px) { 
+      .overlay-container {
+        display: none;
+      }
+      .fullWidth {
+        width: 100%;
+      }
+      .sign-up-container {
+        width: 100%;
+      }
+      .sign-in-container {
+        width: 100%;
+      }
+      .container.right-panel-active .sign-up-container {
+        transform: translate(0%);
+      }
+      button.sUp, button.sIn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- navbar -->
+  
+  <div class="container user-signup" id="container">
+    <div class="form-container sign-up-container">
+      <h1>Create Account</h1>
+      <br>
+      <form action="/api/register" id="signup-form">
+        <span>Create an account for free </span>
+        <input type="text" id="registerName" placeholder="Name" name="name" />
+        <input type="email" id="registerEmail" placeholder="Email" name="email" />
+        <input type="text" id="registerContactno" placeholder="Contact No" name="contact"/>
+        <input type="password" id="registerPassword" placeholder="Password" name="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"/>
+        <div class="d-flex justify-content-center mt-2">
+          <input type="radio" id="registerGender" name="gender" value="Male" style="width: 80px;" required/><label>Male</label>
+          <input type="radio" id="registerGender" name="gender" value="Female" style="width: 80px;" required/><label>Female</label>
+        </div>
+        <button type="submit" class="text-dark">Sign Up</button>
+      </form>
+      <button class="ghost sIn" id="signIn1">Sign In</button>
+
+      <form id="submit-otp" action="/api/submit/otp" class="submit-otp">
+        <span>Enter your 4 digit OTP pin </span>
+        <br>
+        <input type="password" id="enterotp1" placeholder="Password" />
+        <button type="submit">Submit OTP</button>
+      </form>
+    </div>
+    <div class="form-container sign-in-container login-form-div">
+      <form id="login-form" action="/api/login" class="login-form">
+        <h1 class="text-light">Sign In</h1>
+        <br>
+        <span>Already have account ? </span>
+        <input type="email" id="loginName" placeholder="Email" />
+        <input type="password" id="loginPassword" placeholder="Password" />
+        <br>
+        <a href="#!" onclick="forgotPassword();">Forgot password?</a>
+        <br>
+        <button class="text-dark">Sign In</button>
+      </form>
+      <button class="ghost sUp" id="signUp1">Sign Up</button>
+
+
+      <form id="forgot-pass" action="/api/forget/pass" class="forgot-pass">
+        <div class="forgetBox">
+          <span>Forgot your Password ? </span>
+          <input type="text" id="enteremail1" placeholder="Email">
+          <button type="submit">Send OTP</button>
+        </div>
+      </form>
+ 
+      <form id="forgot-pass-otp" action="/api/forget/pass/otp" class="forgot-pass-otp">
+        <div class="forgetBox">
+          <span>Enter your 4 digit OTP </span>
+          <div class="otpInputContainer">
+            <input type="text" id="enterotp" placeholder="Enter OTP">
+          </div>
+          <button type="submit">Submit OTP</button>
+        </div>
+      </form>
+
+      <form id="forgot-pass-otp-newpass" action="/api/forget/pass/otp/newpass" class="forgot-pass-otp-newpass">
+        <div class="forgetBox">
+          <span>Enter your new Password </span>
+          <input type="password" id="enterpass" placeholder="New Password">
+          <input type="password" id="enterpass1" placeholder="Confirm Password">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="overlay-container">
+      <div class="overlay">
+        <div class="overlay-panel overlay-left">
+          <h1>Welcome Back</h1>
+          <p> If you already have account please login to keep connected with us</p>
+          <button class="ghost" id="signIn">Sign In</button>
+        </div>
+        <div class="overlay-panel overlay-right">
+          <h1>Hey, Users</h1>
+          <p>Don't have account ? Please sign up with your personal details to connect with us ! </p>
+          <button class="ghost" id="signUp">Sign Up</button>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+
+  <script src="js/custom.js"></script>
+
+  <script>
+    const form = document.getElementById('signup-form')
+    form.addEventListener('submit', registerUser)
+
+    async function registerUser(event) {
+      event.preventDefault();
+
+      const registerName = document.getElementById('registerName').value;
+      const registerContactno = document.getElementById('registerContactno').value;
+      const registerEmail = document.getElementById('registerEmail').value;
+      const registerPassword = document.getElementById('registerPassword').value;
+      const registerGender = $("input[type='radio'][name='gender']:checked").val();
+      const result = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          registerName,
+          registerContactno,
+          registerEmail,
+          registerPassword,
+          registerGender,
+        })
+      }).then((res) => res.json())
+
+      if (result.data === 'ok') {
+        $("#signup-form").hide();
+        $("#submit-otp").show();
+      }
+      else if (result.data === 'length') {
+        alert("enter correct contact no")
+      }
+      else {
+        if (result.code === 11000) {
+          alert(Object.values(result.keyValue)[0] + " already exists")
+        }
+        else if (Object.keys(result.errors)[0] === 'name') {
+          alert("Name can't be empty")
+        }
+        else if (Object.keys(result.errors)[0] === 'contact') {
+          alert("Invalid contact number")
+        }
+        // else if (Object.keys(result.errors)[0] === 'gender') {
+        //   alert("Gender is required")
+        // }
+        else if (Object.keys(result.errors)[0] === 'email') {
+          alert("Invalid email address")
+        }
+        else if (Object.keys(result.errors)[0] === 'password') {
+          alert("Invalid password and must be more than 8 characters")
+        }
+        else {
+          alert(Object.values(result.errors)[0].message)
+        }
+      }
+      // console.log(result)
+    }
+
+    // ********************** submit OTP Form **********************************************
+
+    const otpForm = document.getElementById('submit-otp')
+    otpForm.addEventListener('submit', registerSubmitOtp)
+
+    async function registerSubmitOtp(event) {
+      event.preventDefault();
+
+      const checkOtp = document.getElementById('enterotp1').value;
+
+      const result = await fetch('/api/submit/otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          checkOtp
+        })
+      }).then((res) => res.json())
+
+      if (result.data === 'ok') {
+        // alert("Registration Successful")
+        location.reload()
+      }
+      else {
+        alert("Please enter correct OTP")
+      }
+      console.log(result)
+    }
+
+    // ********************** login Form **********************************************
+
+    const loginForm = document.getElementById('login-form')
+    loginForm.addEventListener('submit', loginSubmit)
+
+    async function loginSubmit(event) {
+      event.preventDefault();
+
+      const getEmail = document.getElementById('loginName').value;
+      const getPass = document.getElementById('loginPassword').value;
+
+      const result = await fetch('/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          getEmail,
+          getPass
+        })
+      }).then((res) => res.json())
+
+      if (result.data === 'ok') {
+        // alert("Login Successful")
+        window.location.assign("/");
+      }
+      else {
+        alert("Invalid Credentials")
+      }
+      console.log(result)
+    }
+
+    // ********************** Enter Email OTP Form **********************************************
+
+    function forgotPassword() {
+      $("#forgot-pass").show()
+      $("#login-form").hide()
+    }
+
+    const otpEmail1 = document.getElementById('forgot-pass')
+    otpEmail1.addEventListener('submit', forgetEnterEmail)
+
+    async function forgetEnterEmail(event) {
+      event.preventDefault();
+
+      const otpEmail = document.getElementById('enteremail1').value;
+
+      const result = await fetch('/api/forget/pass', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          otpEmail
+        })
+      }).then((res) => res.json())
+
+      if (result.data === 'ok') {
+        alert("OTP sent to registered email")
+        $("#forgot-pass").hide();
+        $("#forgot-pass-otp").show();
+      }
+      else {
+        alert("Please enter correct email")
+      }
+      console.log(result)
+    }
+
+    // ********************** forgot OTP Form **********************************************
+
+
+    const forgototpForm = document.getElementById('forgot-pass-otp')
+    forgototpForm.addEventListener('submit', forgotSubmitOtp)
+
+    async function forgotSubmitOtp(event) {
+      event.preventDefault();
+
+      const forgotCheckOtp = document.getElementById('enterotp').value;
+
+      const result = await fetch('/api/forget/pass/otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          forgotCheckOtp
+        })
+      }).then((res) => res.json())
+
+      if (result.data === 'ok') {
+        // alert("OTP Matched")
+        $("#forgot-pass-otp").hide();
+        $("#forgot-pass-otp-newpass").show();
+      }
+      else {
+        alert("Please enter correct OTP")
+      }
+      console.log(result)
+    }
+
+    // ********************** forgot OTP New Password Form **********************************************
+
+    const forgototpNewPassForm = document.getElementById('forgot-pass-otp-newpass')
+    forgototpNewPassForm.addEventListener('submit', forgotOtpNewPass)
+
+    async function forgotOtpNewPass(event) {
+      event.preventDefault();
+
+      const enterpass = document.getElementById('enterpass').value;
+      const enterpass1 = document.getElementById('enterpass1').value;
+
+      const result = await fetch('/api/forget/pass/otp/newpass', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          enterpass, enterpass1
+        })
+      }).then((res) => res.json())
+
+      if (result.data === 'ok') {
+        // alert("Password Changed Successfully")
+        location.reload()
+      }
+      else {
+        alert("Password did't match")
+      }
+      console.log(result)
+    }
+
+
+
+    // login signup
+    const signUpButton = document.getElementById("signUp");
+    const signInButton = document.getElementById("signIn");
+    const container = document.getElementById("container");
+
+    signUpButton.addEventListener("click", () => {
+      container.classList.add("right-panel-active");
+    });
+
+    signInButton.addEventListener("click", () => {
+      container.classList.remove("right-panel-active");
+    });
+
+
+
+    const signUpButton1 = document.getElementById("signUp1");
+    const signInButton1 = document.getElementById("signIn1");
+
+    signUpButton1.addEventListener("click", () => {
+      container.classList.add("right-panel-active");
+
+      document.getElementsByClassName('sign-in-container').addClass('fullWidth');
+      document.getElementsByClassName('sign-up-container').removeClass('fullWidth');
+    });
+
+    signInButton1.addEventListener("click", () => {
+      container.classList.remove("right-panel-active");
+      document.getElementsByClassName('sign-up-container').addClass('fullWidth');
+      document.getElementsByClassName('sign-in-container').removeClass('fullWidth');
+    });
+
+  </script>
+
+  <script>
+    function changeForm(id) {
+      let formId = id;
+      if(formId=='login'){
+        document.getElementById('login-form-div').style.display = "block";
+        document.getElementById('signup-form-div').style.display = "none";
+      }
+      else if(formId=='signup'){
+        document.getElementById('login-form-div').style.display = "none";
+        document.getElementById('signup-form-div').style.display = "block";
+      }
+    }
+  </script>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</body>
+
+</html>

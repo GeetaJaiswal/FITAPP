@@ -1,0 +1,192 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <!-- Humberger Begin -->
+    <div class="humberger__menu__overlay"></div>
+    <div class="humberger__menu__wrapper">
+        <div class="humberger__menu__logo">
+            <a href="/"><img src="/shop/img/logo.png" alt="" srcset=""></a>
+        </div>
+        <!-- <div class="humberger__menu__cart">
+            <ul>
+                <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> 
+                <li><a href="#"><i class="fa fa-shopping-bag"></i> <span>3</span></a></li>
+            </ul>
+            <div class="header__cart__price">item: <span>$150.00</span></div>   
+        </div> -->
+        <div class="humberger__menu__widget">
+            <!-- <div class="header__top__right__language">
+                <img src="img/language.png" alt="">
+                <div>English</div>
+                <span class="arrow_carrot-down"></span>
+                <ul>
+                    <li><a href="#">Spanis</a></li>
+                    <li><a href="#">English</a></li>
+                </ul>
+            </div> -->
+            <!-- <div class="header__top__right__auth">
+                <a href="#"><i class="fa fa-user"></i> Login</a>
+            </div> -->
+        </div>
+        <nav class="humberger__menu__nav mobile-menu">
+            <ul class="nav">
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/products">Shop</a></li>
+                <li><a href="#">Fitness Check</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/cart">Shoping Cart</a></li>
+                <li><a href="/checkout">Check Out</a></li>
+                <!-- <li><a href="#">Blog Details</a></li> -->
+                <li><a href="/order-tracking">Track Your Order</a></li>
+                <!-- <li><a href="./blog.html">Blog</a></li> -->
+            </ul>
+        </nav>
+        <div id="mobile-menu-wrap"></div>
+        <div class="header__top__right__social">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-pinterest-p"></i></a>
+        </div>
+        <div class="humberger__menu__contact">
+            <ul>
+                <li><i class="fa fa-envelope"></i> info@fitapp.com</li>
+                <li>Free Shipping on all Order</li>
+            </ul>
+        </div>
+    </div>
+    <!-- Humberger End -->
+
+    <!-- Header Section Begin -->
+    <header class="header mb-5">
+        <div class="header__top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__left">
+                            <ul>
+                                <li><i class="fa fa-envelope"></i> info@fitapp.com</li>
+                                <li>Free Shipping on all Orders</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <div class="header__top__right">
+                            <div class="header__top__right__social">
+                                <a href="#"><i class="fab fa-facebook"></i></a>
+                                <a href="#"><i class="fab fa-twitter"></i></a>
+                                <a href="#"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-pinterest-p"></i></a>
+                            </div>
+                            <!-- <div class="header__top__right__language">
+                                <img src="img/language.png" alt="">
+                                <div>English</div>
+                                <span class="arrow_carrot-down"></span>
+                                <ul>
+                                    <li><a href="#">Spanis</a></li>
+                                    <li><a href="#">English</a></li>
+                                </ul>
+                            </div> -->
+                            <div class="header__top__right__auth">
+                                <% if(cookies!=undefined){ %><%- registeredUser %><form method="post" action="/logout" class="d-inline px-3 "><button type="submit" class="bg-transparent border-0"><i class="fa-solid fa-arrow-right-from-bracket"></i></form><% } else { %><a href="/login"><i class="fa fa-user"></i> Login</a><% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row d-flex justify-content-center align-items-center" style="height:90px;">
+                <div class="col-lg-3">
+                    <div class="header__logo">
+                        <a href="/"><img src="/shop/img/logo.png" alt="" srcset=""></a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <nav class="header__menu">
+                        <ul class="nav p-0">
+                            <li class="active nav-item"><a href="/">Home</a></li>
+                            <li class="nav-item"><a href="/products">Shop</a></li>
+                            <li class="nav-item"><a href="#">Fitness Check</a></li>
+                            <li class="nav-item"><a href="/contact">Contact</a></li>
+                            <li class="nav-item"><a href="#">More</a>
+                                <ul class="header__menu__dropdown">
+                                    <!-- <li><a href="./shop-details.html">Shop Details</a></li> -->
+                                    <li><a href="/cart">Shoping Cart</a></li>
+                                    <li><a href="/checkout">Check Out</a></li>
+                                    <!-- <li><a href="#">Blog Details</a></li> -->
+                                    <li><a href="/order-tracking">Track Your Order</a></li>
+                                    <li><a href="/login">Login</a></li>
+                                </ul>
+                            </li>
+                            <!-- <li><a href="./blog.html">Blog</a></li> -->
+                        </ul>
+                    </nav>
+                </div>
+                <div class="col-lg-1 d-lg-block d-none">
+                    <div class="header__cart">
+                        <ul>
+                            <!-- <li><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li> -->
+                            <li><a href="/cart"><i class="fa fa-shopping-bag"></i> <span><% if(cookies!=undefined){%><%- cartProduct %><% } else {%>0<% } %></span></a></li>
+                        </ul>
+                        <!-- <div class="header__cart__price">item: <span>$150.00</span></div> -->
+                    </div>
+                </div>
+            </div>
+            <div class="humberger__open">
+                <i class="fa fa-bars"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header Section End -->
+
+    <!-- Hero Section Begin -->
+    <!-- <section class="hero">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <img src="/shop/img/logo.png" alt="" srcset="">
+                </div>
+                <div class="col-lg-9"> -->
+                    <!-- <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="#">
+                                <div class="hero__search__categories">
+                                    All Categories
+                                    <span class="arrow_carrot-down"></span>
+                                </div>
+                                <input type="text" placeholder="What do yo u need?">
+                                <button type="submit" class="site-btn">SEARCH</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    
+                <!-- </div>
+            </div>
+        </div> -->
+    <!-- </section> -->
+    <!-- Hero Section End -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+    <script>
+       $(document).ready(function(){
+    $(".nav-item a").on("click", function(){  
+         $(".nav-item.active").removeClass("active");  
+         $(this).parent().addClass("active");
+    }).filter(function(){
+        return window.location.href.indexOf($(this).attr('href').trim()) > -1;
+    }).click();
+});
+    </script>

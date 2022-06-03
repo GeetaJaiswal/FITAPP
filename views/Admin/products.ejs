@@ -1,0 +1,779 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Orders</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+	<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+	<div class="top-bar d-flex justify-content-end align-items-center">
+		<div class="dropdown" style="margin-right:40px">
+			<img src="/images/profile-img.png" class="dropbtn" alt="profile" width="40px">
+			<div class="dropdown-content">
+				<div class="mb-2">
+					<button type="submit" class="border-0 bg-transparent" data-bs-toggle="modal"
+						data-bs-target="#changePasswordModal"><i class="fa-solid fa-lock pe-3"></i>Change
+						Password</button>
+				</div>
+				<form action="/admin/logout" method="post">
+					<button type="submit" class="border-0 bg-transparent"><i
+							class="fas fa-sign-out pe-3"></i>Logout</button>
+				</form>
+			</div>
+		</div>
+		<!-- <i class="fas fa-sign-out pe-4 text-light"></i> -->
+	</div>
+	<div class="wrapper d-flex align-items-stretch">
+		<%- include('../partials/admin-sidebar.ejs') %>
+
+			<!-- Page Content  -->
+			<div id="content" class="p-4 px-md-5 pt-3 content wrapper">
+				<h4>Products</h4>
+				<div class="d-flex justify-content-end">
+					<button class="primary-btn border-0 mt-2 mb-4" data-bs-toggle="modal"
+						data-bs-target="#addProductModal"><i class="fa fa-plus me-2"></i>Add Product</button>
+				</div>
+				<div class="table-responsive dashboard-left-div py-4" id="tableDiv">
+					<table class="table table-bordered table-products text-center" id="myTable"
+						style="border-color: rgba(0, 0, 0, 0.336)!important;">
+						<thead>
+							<tr>
+								<th>S.no.</th>
+								<th>Product Name</th>
+								<th>Product Image</th>
+								<!-- <th>Related Images</th> -->
+								<th>Category</th>
+								<th>Stock</th>
+								<th>Regular Price</th>
+								<th>Sale Price</th>
+								<th>Weight</th>
+								<th>material</th>
+								<th>Shirt Size</th>
+								<th>Shoe Size</th>
+								<!-- <th>Fetaures</th> -->
+								<!-- <th>Description</th> -->
+								<th>Actions</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% if(products){ %>
+							<% var count=0; for(var i=0; i<products.length; i++) { %>
+								<tr>
+									<td>
+										<%- ++count %>
+									</td>
+									<td>
+										<%- products[i].product_name %>
+									</td>
+									<td><img src="/uploads/<%- products[i].image %>" alt="" width="80%"> %></td>
+									<td>
+										<%- products[i].category %>
+									</td>
+									<td>
+										<%- products[i].stock %>
+									</td>
+									<td>
+										<%- products[i].regular_price %>
+									</td>
+									<td>
+										<%- products[i].sale_price %>
+									</td>
+									<td>
+										<% if(products[i].category=='Dumbbell' ) { %>
+											<%- products[i].weight %>
+												<% } %>
+									</td>
+									<td>
+										<% if(products[i].category=='Dumbbell' ) { %>
+											<% if(products[i].material){ %>
+												<%- products[i].material %>
+													<% } } %>
+									</td>
+									<td>
+										<% if(products[i].category=='T-Shirt' ) { %>
+											<% if(products[i].shirt_size){ %>
+												<%- products[i].shirt_size %>
+													<% } } %>
+									</td>
+									<td>
+										<% if(products[i].category=='Shoes' ) { %>
+											<% if(products[i].shoe_size){ %>
+												<%- products[i].shoe_size %>
+													<% } } %>
+									</td>
+									<td>
+										<i id="<%- products[i]._id %>" class="fas fa-pen-alt me-2 text editProduct"
+											data-bs-toggle="modal" data-bs-target="#editProductModal"></i>
+										<i id="<%- products[i]._id %>"
+											class="fas fa-trash-alt deleteProduct text-danger me-2"></i>
+									</td>
+								</tr>
+								<% } } else { %>
+								<h4> No products </h4>
+									<% } %>
+						</tbody>
+					</table>
+				</div>
+			</div>
+	</div>
+
+	<!-- Modal Add Product -->
+	<div class="modal fade" id="addProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-lg modal-dialog-centered ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body admin-dashboard-modal">
+					<form id="addProductForm" action="/addProduct" method="post" enctype="multipart/form-data">
+						<div class="row">
+							<div class="col-4">
+								<div class="form-group">
+									<input type="text" name="addProductName" id="" placeholder="Enter Product Name"
+										class="dropDark mb-2 form-control shadow-none" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<select id="category" name="category" class="mb-2 form-select shadow-none" required>
+										<option value="">Choose Category</option>
+										<option value="Shoes">Shoes</option>
+										<option value="Dumbbell">Dumbbell</option>
+										<option value="T-Shirt">Shirt</option>
+										<option value="Watch">Watch</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<input type="number" name="addRegularPrice" id="" placeholder="Enter Regular Price"
+										class="dropDark mb-2 form-control shadow-none" required>
+								</div>
+							</div>
+							<div class="col-4 mt-4">
+								<div class="form-group">
+									<input type="number" name="addSalePrice" id="" placeholder="Enter Sale Price"
+										class="dropDark mb-2 form-control shadow-none" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<small>Select Product Image</small>
+								<div class="form-group">
+									<input type="file" name="addImage" id=""
+										class="dropDark mb-2 form-control shadow-none"
+										accept="image/png, image/jpg, image/jpeg" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<small>Select Images (only .png, .jpg, .jpeg)</small>
+								<div class="form-group">
+									<input type="file" name="addRelatedImg" id=""
+										class="dropDark mb-2 form-control shadow-none" multiple
+										accept="image/png, image/jpg, image/jpeg" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<input type="number" name="addStock" id="" placeholder="Enter Stock"
+										class="dropDark mb-2 form-control shadow-none" required>
+								</div>
+							</div>
+							<div class="col-4 shoeSize d-none">
+								<div class="form-group">
+									<select id="" name="addShoeSize" class="mb-2 form-select shadow-none op shSize"
+										multiple required>
+										<option value="" disabled>Select multiple Size</option>
+										<option value="3 Uk">3 Uk</option>
+										<option value="4 Uk">4 Uk</option>
+										<option value="5 Uk">5 Uk</option>
+										<option value="6 Uk">6 Uk</option>
+										<option value="7 Uk">7 Uk</option>
+										<option value="8 Uk">8 Uk</option>
+										<option value="9 Uk">9 Uk</option>
+										<option value="10 Uk">10 Uk</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4 tShirtSize d-none">
+								<div class="form-group">
+									<select id="" name="addShirtSize" class="mb-2 form-select shadow-none op tSize"
+										multiple required>
+										<option value="" disabled>Select multiple Size</option>
+										<option value="S">S</option>
+										<option value="M">M</option>
+										<option value="L">L</option>
+										<option value="XL">XL</option>
+										<option value="XXL">XXL</option>
+										<option value="XXXL">XXXL</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4 proDumbell d-none">
+								<div class="form-group">
+									<input type="text" name="addWeight" id="" placeholder="Enter Product Weight"
+										class="dropDark mb-2 form-control shadow-none op weight" required>
+								</div>
+							</div>
+							<div class="col-4 proDumbell d-none">
+								<div class="form-group">
+									<input type="text" name="addMaterial" id="" placeholder="Enter Material"
+										class="dropDark mb-2 form-control shadow-none op material" required>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<small>Enter Product Description</small>
+							<div class="col-12">
+								<div class="form-group">
+									<div name="proDescription" id="proDescription" class="pro-ckeditor" required></div>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-2 features d-none">
+							<small>Enter Product Features</small>
+							<div class="col-12">
+								<div class="form-group">
+									<textarea name="proFeatures" id="proFeatures" class="pro-ckeditor op features"
+										required>Write Here...</textarea>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="modal-footer">
+							<input type="submit" class="btn primary-btn shadow-none" value="Add Product">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal Edit Product -->
+	<div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog  modal-lg modal-dialog-centered ">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Edit Product</h5>
+					<button type="button" class="btn-close btn-light" data-bs-dismiss="modal"
+						aria-label="Close"></button>
+				</div>
+				<div class="modal-body admin-dashboard-modal">
+					<form method="post" id="editProductForm" enctype="multipart/form-data" action="/admin/editProduct">
+						<div class="row">
+							<input type="hidden" name="id" id="product-id">
+							<div class="col-4">
+								<div class="form-group">
+									<small>Product Name</small>
+									<input type="text" id="editProductName" name="editProductName"
+										placeholder="Enter Product Name"
+										class="dropDark mb-2 form-control shadow-none opti" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<small>Category</small>
+									<select name="editCategory" id="editCategory"
+										class="mb-2 form-select shadow-none opti" required>
+										<option value="">Choose Category</option>
+										<option value="Shoes">Shoes</option>
+										<option value="Dumbbell">Dumbbell</option>
+										<option value="T-Shirt">Shirt</option>
+										<option value="Watch">Watch</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<small>Regular Price</small>
+									<input type="number" id="editRegularPrice" name="editRegularPrice"
+										placeholder="Enter Regular Price"
+										class="dropDark mb-2 form-control shadow-none opti" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<small>Sale Price</small>
+									<input type="number" id="editSalePrice" name="editSalePrice"
+										placeholder="Enter Sale Price"
+										class="dropDark mb-2 form-control shadow-none opti" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<small>Select Product Image</small>
+									<input type="text" id="editImage" name="editImage" value="" onfocus="(type='file')"
+										class="dropDark mb-2 form-control shadow-none opti"
+										accept="image/png, image/jpg, image/jpeg" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<small>Select Images (only .png, .jpg, .jpeg)</small>
+									<input type="text" id="editRelatedImage" name="editRelatedImage" value=""
+										onfocus="(type='file')" class="dropDark mb-2 form-control shadow-none opti"
+										multiple accept="image/png, image/jpg, image/jpeg" required>
+								</div>
+							</div>
+							<div class="col-4">
+								<div class="form-group">
+									<small>Stock</small>
+									<input type="number" id="editStock" name="editStock" placeholder="Enter Stock"
+										class="dropDark mb-2 form-control shadow-none opti" required>
+								</div>
+							</div>
+							<div class="col-4 shoeSize opt">
+								<div class="form-group">
+									<small>Shoe Size</small>
+									<select name="editShoeSize" id="editShoeSize"
+										class="mb-2 form-select shadow-none sh-size opti" multiple required>
+										<option value="" disabled>Select multiple Size</option>
+										<option value="3 UK">3 UK</option>
+										<option value="4 UK">4 UK</option>
+										<option value="5 UK">5 UK</option>
+										<option value="6 UK">6 UK</option>
+										<option value="7 UK">7 UK</option>
+										<option value="8 UK">8 UK</option>
+										<option value="9 UK">9 UK</option>
+										<option value="10 UK">10 UK</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4 tShirtSize opt">
+								<div class="form-group">
+									<small>Shirt Size</small>
+									<select name="editShirtSize" id="editShirtSize"
+										class="mb-2 form-select shadow-none t-size opti" multiple required>
+										<option value="" disabled>Select multiple Size</option>
+										<option value="S">S</option>
+										<option value="M">M</option>
+										<option value="L">L</option>
+										<option value="XL">XL</option>
+										<option value="XXL">XXL</option>
+										<option value="XXXL">XXXL</option>
+									</select>
+								</div>
+							</div>
+							<div class="col-4 proDumbell opt">
+								<div class="form-group">
+									<small>Weight</small>
+									<input type="text" id="editWeight" name="editWeight"
+										placeholder="Enter Product Weight"
+										class="dropDark mb-2 form-control shadow-none p-weight dumb opti" required>
+								</div>
+							</div>
+							<div class="col-4 proDumbell opt">
+								<div class="form-group">
+									<small>Material</small>
+									<input type="text" id="editMaterial" name="editMaterial"
+										placeholder="Enter Material"
+										class="dropDark mb-2 form-control shadow-none p-material dumb opti" required>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<small>Enter Product Description</small>
+									<textarea id="editDescription" name="editDescription" class="pro-ckeditor opti"
+										required>dwq</textarea>
+								</div>
+							</div>
+						</div>
+						<div class="row mt-2 features opt">
+							<div class="col-12">
+								<div class="form-group">
+									<small>Enter Product Features</small>
+									<textarea id="editFeatures" name="editFeatures" class="pro-ckeditor p-features opti"
+										required>qwrq</textarea>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="modal-footer">
+							<input type="submit" class="btn primary-btn shadow-none" value="Edit Product">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- ######  change Password   ###### -->
+  <div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="changePasswordModalLabel">Modal title</h5>
+		  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+		</div>
+		<div class="modal-body">
+			<form id="changePassword">
+				<div class="row">
+					<div class="col-12">
+						<div class="form-group">
+							<input type="email" name="adminEmail" id="adminEmail"
+							  class="dropDark mb-2 form-control shadow-none" value="<%- username %>" disabled required>
+						  </div>
+					</div>
+					<div class="col-12">
+						<div class="form-group">
+							<input type="password" name="adminPassword" id="adminPassword"
+							  class="dropDark mb-2 form-control shadow-none" placeholder="Enter new Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters" required>
+						  </div>
+					</div>
+					<div class="col-12">
+						<div class="form-group">
+							<input type="password" name="adminRetype" id="adminRetype"
+							  class="dropDark mb-2 form-control shadow-none" placeholder="Retype Password" required>
+						  </div>
+					</div>
+				</div>
+				   <br>
+				<div class="modal-footer">
+					<input type="submit" class="btn primary-btn shadow-none">
+				</div>
+			</form>
+		</div>
+	  </div>
+	</div>
+  </div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+		integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
+	<script type="text/javascript" charset="utf8"
+		src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
+	<!-- <script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="js/main.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+
+
+	<script>
+		var notyf = new Notyf();
+		ClassicEditor
+			.create(document.querySelector('#proFeatures'))
+			.then(editor => {
+				// console.log( editor );
+				editorFeatures = editor;
+			})
+			.catch(error => {
+				// console.error( error );
+			});
+
+		ClassicEditor
+			.create(document.querySelector('#proDescription'))
+			.then(editor => {
+				// console.log( editor );
+				editorDescription = editor;
+			})
+			.catch(error => {
+				// console.error( error );
+			});
+
+		ClassicEditor
+			.create(document.querySelector('#editFeatures'))
+			.then(editor => {
+				// console.log( editor );
+				editFeatures = editor;
+			})
+			.catch(error => {
+				// console.error( error );
+			});
+
+		ClassicEditor
+			.create(document.querySelector('#editDescription'))
+			.then(editor => {
+				// console.log( editor );
+				editDescription = editor;
+			})
+			.catch(error => {
+				// console.error( error );
+			});
+
+
+		$('#category').change(function () {
+			if ($(this).val() == 'Dumbbell') {
+				$('.proDumbell').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.weight').attr('required', true);
+				$('.material').attr('required', true);
+			}
+			else {
+				$('.proDumbell').addClass('d-none');
+			}
+			if ($(this).val() == 'Shoes') {
+				$('.shoeSize').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.shSize').attr('required', true);
+			}
+			else {
+				$('.shoeSize').addClass('d-none');
+			}
+			if ($(this).val() == 'T-Shirt') {
+				$('.tShirtSize').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.tShirt').attr('required', true);
+			}
+			else {
+				$('.tShirtSize').addClass('d-none');
+			}
+			if ($(this).val() == 'Watch') {
+				$('.features').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.features').attr('required', true);
+			}
+			else {
+				$('.features').addClass('d-none');
+			}
+		})
+
+
+		$('#editCategory').change(function () {
+			if ($(this).val() == 'Dumbbell') {
+				$('.proDumbell').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.weight').attr('required', true);
+				$('.material').attr('required', true);
+			}
+			else {
+				$('.proDumbell').addClass('d-none');
+			}
+			if ($(this).val() == 'Shoes') {
+				$('.shoeSize').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.shSize').attr('required', true);
+			}
+			else {
+				$('.shoeSize').addClass('d-none');
+			}
+			if ($(this).val() == 'T-Shirt') {
+				$('.tShirtSize').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.tShirt').attr('required', true);
+			}
+			else {
+				$('.tShirtSize').addClass('d-none');
+			}
+			if ($(this).val() == 'Watch') {
+				$('.features').removeClass('d-none');
+				$('.op').removeAttr('required');
+				$('.features').attr('required', true);
+			}
+			else {
+				$('.features').addClass('d-none');
+			}
+		})
+
+		// ##### fetch Product ######
+		$(".editProduct").on("click", function () {
+			const product_id = this.id;
+			async function editFunc(event) {
+				const result = await fetch('/editProduct', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						product_id
+					})
+				}).then((res) => res.json())
+				if (result.data === 'ok') {
+					if (result.d[0].category == 'T-Shirt') {
+						$('.opt').addClass('d-none');
+						$('.opti').removeAttr('required');
+						$('.tShirtSize').removeClass('d-none');
+						$('.t-size').attr('required', true);
+					}
+
+					if (result.d[0].category == 'Shoes') {
+						$('.opt').addClass('d-none');
+						$('.opti').removeAttr('required');
+						$('.shoeSize').removeClass('d-none');
+						$('.sh-size').attr('required', true);
+					}
+
+					if (result.d[0].category == 'Dumbbell') {
+						$('.opt').addClass('d-none');
+						$('.opti').removeAttr('required');
+						$('.proDumbell').removeClass('d-none');
+						$('.dumb').attr('required', true);
+					}
+
+					if (result.d[0].category == 'Watch') {
+						$('.opt').addClass('d-none');
+						$('.opti').removeAttr('required');
+						$('.features').removeClass('d-none');
+						$('.p-features').attr('required', true);
+					}
+
+
+					var shirtSize = result.d[0].shirt_size;
+					var sh = shirtSize.toString();
+					$.each(sh.split(","), function (i, e) {
+						$("#editShirtSize option[value='" + e + "']").prop("selected", true);
+					});
+
+					var shoeSize = result.d[0].shoe_size;
+					var sho = shoeSize.toString();
+					$.each(sho.split(","), function (i, e) {
+						$("#editShoeSize option[value='" + e + "']").prop("selected", true);
+					});
+
+					$('#product-id').val(result.d[0]._id);
+					$('#editProductName').val(result.d[0].product_name);
+					$('#editCategory').val(result.d[0].category);
+					$('#editRegularPrice').val(result.d[0].regular_price);
+					$('#editSalePrice').val(result.d[0].sale_price);
+					$('#editStock').val(result.d[0].stock);
+					$('#editWeight').val(result.d[0].weight);
+					$('#editMaterial').val(result.d[0].material);
+					editDescription.setData(result.d[0].description);
+					$('#editImage').val(result.d[0].image);
+					$('#editRelatedImage').val(result.d[0].related_img);
+					editFeatures.setData(result.d[0].features);
+				}
+			}
+
+			editFunc()
+		})
+
+
+		// ######## dataTable ####### 
+		$(document).ready(function () {
+			$('#myTable').dataTable();
+		});
+
+
+		// ####### Delete Product ########
+		$(".deleteProduct").on("click", function () {
+			const product_id = this.id;
+			async function delFunc(event) {
+				swal.fire({
+					title: 'Are you sure?',
+					text: "You won't be able to revert this!",
+					// icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#1e4261',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes, delete it!',
+				}).then((result) => {
+					if (result.isConfirmed) {
+						var request = $.ajax({
+							url: "/deleteProduct",
+							type: "POST",
+							data: { product_id: product_id },
+							// dataType: "html"
+						});
+						request.done(function (msg) {
+							//   console.log(msg.data)
+							if (msg.data == 'ok') {
+								location.reload();
+								// $('#myTable').load(' #myTable');
+							} else {
+								// console.log('dwe');
+							}
+						});
+					}
+				})
+			}
+			delFunc()
+		})
+
+
+		// ##### Edit Password #####
+	const form = document.getElementById('changePassword')
+    form.addEventListener('submit', changePassword)
+
+    async function changePassword(event) {
+      event.preventDefault();
+			username = $('#adminEmail').val();
+			password = $('#adminPassword').val();
+			reTypePass = $('#adminRetype').val();
+			$.ajax({
+				type: 'POST',
+				url: '/admin/changePassword',
+				data: {username, password, reTypePass},
+				success: function (res) {
+					if(res.data=='ok') {
+					    notyf.success({
+					        message: 'Password has been changed',
+					        duration: 2000,
+					        position: {
+					            x: 'right',
+					            y: 'top',
+					        },
+					    })
+						$('#changePasswordModal').modal('hide');
+						$('.modal-backdrop').remove();
+					}
+					else if(res.data=='notChange') {
+					    notyf.error({
+					        message: 'Something wrong! Try again',
+					        duration: 2000,
+					        position: {
+					            x: 'right',
+					            y: 'top',
+					        },
+					    })
+					}
+					else if(res.data=='passNotMatch') {
+					    notyf.error({
+					        message: 'Both Passwords must be same',
+					        duration: 2000,
+					        position: {
+					            x: 'right',
+					            y: 'top',
+					        },
+					    })
+					}
+					else if(res.data=='cred') {
+					    notyf.error({
+					        message: 'Some Error! Try again',
+					        duration: 2000,
+					        position: {
+					            x: 'right',
+					            y: 'top',
+					        },
+					    })
+					}
+					else {
+					    notyf.error({
+					        message: 'Something is wrong',
+					        duration: 2000,
+					        position: {
+					            x: 'right',
+					            y: 'top',
+					        },
+					    })
+					}
+				}
+			})
+		}
+
+
+
+	</script>
+
+</body>
+
+</html>

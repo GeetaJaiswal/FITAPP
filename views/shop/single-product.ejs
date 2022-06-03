@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Product</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop/css/bootstrap.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="/shop/css/font-awesome.min.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="/shop/css/elegant-icons.css" type="text/css"> -->
+    <link rel="stylesheet" href="/shop/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <style>
+        .magnifier{
+            border: 0!important;
+        }
+    </style>
+</head>
+
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+     <!-- navbar -->
+     <%- include('../partials/head.ejs') %>
+
+    <!-- Product Details Section Begin -->
+    <section class="product-details spad" style="margin-top: -70px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large block__pic"
+                                src="/uploads/<%- product[0].image %>" alt="">
+                        </div>
+                        <div class="product__details__pic__slider owl-carousel">
+                            <% product.forEach(function(item) { %>
+                                <% for(i=0; i<item.related_img.length; i++) { %>
+                                    <img data-imgbigurl="/uploads/<%- item.related_img[i] %>"
+                                        src="/uploads/<%- item.related_img[i] %>" alt="">
+                                    <% } }) %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>
+                            <%- product[0].product_name %>
+                        </h3>
+                        <!-- <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(18 reviews)</span> 
+                        </div> -->
+                        <div class="product__details__price d-inline pr-2">₹<%- product[0].regular_price %>
+                        </div>
+                        <span><del>₹<%- product[0].sale_price %></del></span>
+                        <p>
+                            <%- product[0].description %>
+                        </p>
+                        <div class="d-flex align-items-center">
+                            <% if((product[0].category=='Shoes' ) || (product[0].category=='T-Shirt' )){ %>
+                                <select name="" id="proSize" class="px-4 mr-2">
+                                    <option value="">Select Size</option>
+                                    <% product.forEach(function(item) { %>
+                                        <% for(i=0; i<item.size.length; i++) { %>
+                                            <option value="<%- item.size[i] %>" selected>
+                                                <%- item.size[i] %>
+                                            </option>
+                                            <% } %>
+                                </select>
+                                <% }) } %>
+                                    <div class="product__details__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="number" value="1" id="proQuantity">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <a href="#" class="primary-btn" onclick="addToCart('<%- product[0]._id %>')">ADD TO CART</a>
+                        </div>
+                        <!-- <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a> -->
+                        
+                        <ul>
+                            <% if(product[0].category=='Watch') { %>
+                                <div class="">
+                                    <b>Features:</b>
+                                    <p><%- product[0].features %></p>
+                                </div>
+                                <% } %>
+                            <li><b>Availability</b> <span>
+                                    <%- product[0].stock %> items Left
+                                </span></li>
+                            <li><b>Shipping</b> <span>Free shipping <b>(within 3-4 days)</b></span></li>
+                            <% if(product[0].category=='Dumbbell' ){ %>
+                                <li><b>Weight</b> <span>
+                                        <%- product[0].weight %>
+                                    </span></li>
+                                <li><b>Material</b> <span>
+                                        <%- product[0].material %>
+                                    </span></li>
+                                <% } %>
+                                    <li><b>Share on</b>
+                                        <div class="share">
+                                            <a href="#" class="whatsapp"><i class="fa-brands fa-whatsapp"></i></a>
+                                            <a href="#" class="telegram"><i class="fa-brands fa-telegram"></i></a>
+                                            <a href="#" class="twitter"><i class="fa-brands fa-twitter"></i></a>
+                                        </div>
+                                    </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Product Details Section End -->
+
+    <!-- Related Product Section Begin -->
+    <section class="related-product">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title related__product__title">
+                        <h2>Related Product</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                    <% for(i=0; i<products.length; i++) { %>
+                        <% if(products[i].category == product[0].category){ %>
+                <div class="col-lg-3 col-md-4 col-6">
+                    <div class="product__item">
+                        <div class="product__item__pic set-bg" data-setbg="/uploads/<%- products[i].image %>"
+                            style="background-image: url('<%- products[i].image %>')">
+                            <ul class="product__item__pic__hover">
+                                <!-- <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
+                                <!-- <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
+                                <li><a href="#"><i class="fa fa-shopping-cart" onclick="addToCart('<%- product[0]._id %>')"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="product__item__text">
+                            <h6><a href="/product/<%- products[i]._id %>"><%- products[i].product_name %></a></h6>
+                            <h5>₹<%- products[i].regular_price %></h5><span><del>₹<%- product[0].sale_price %></del></span>
+                        </div>
+                    </div>
+                </div>
+                <% } } %>
+            </div>
+        </div>
+    </section>
+    <!-- Related Product Section End -->
+
+    <!-- footer -->
+   <%- include('../partials/footer.ejs') %>
+
+    <!-- Js Plugins -->
+    <script src="/shop/js/jquery-3.3.1.min.js"></script>
+    <script src="/shop/js/zoomsl.min.js"></script>
+    <script src="/shop/js/bootstrap.min.js"></script>
+    <script src="/shop/js/jquery.nice-select.min.js"></script>
+    <script src="/shop/js/jquery-ui.min.js"></script>
+    <script src="/shop/js/jquery.slicknav.js"></script>
+    <script src="/shop/js/mixitup.min.js"></script>
+    <script src="/shop/js/owl.carousel.min.js"></script>
+    <script src="/shop/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+    
+    <script>
+        var notyf = new Notyf();
+        function addToCart(id) {
+            pId = id;
+            '<% if((product[0].category=="Shoes") || (product[0].category=="T-Shirt")){ %>'
+                size = document.getElementById('proSize').value;
+            '<% } else { %>'
+                size = ' ';
+            '<% } %>'
+            quantity = document.getElementById('proQuantity').value;
+            $.ajax({
+                type: 'POST',
+                url: '/checkCart',
+                data: {productId:pId, quantity:quantity, size:size},
+                success: function(res){
+                    if(res.data=='ok') {
+                        notyf.success({
+                            message: 'Added to cart <a href="/cart" class="ml-2">Check Cart</a>',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+
+                        })
+                        // alert('Inserted');
+                    }
+                    else if(res.data=='updated') {
+                         notyf.success({
+                            background: 'green',
+                            message: 'Added to cart <a href="/cart" class="ml-2">Check Cart</a>',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+
+                        })
+                        // alert('Updated');
+                    }
+                    else if(res.data=='err') {
+                        notyf.success({
+                            background: 'orange',
+                            message: 'There is some error',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'bottom',
+                            },
+
+                        })
+                        // alert('Some Error');
+                    }
+                    else {
+                        notyf.error({
+                            message: 'Please Login to add Product into the cart <a href="/login" class="ml-2">Click Here</a>',
+                            duration: 2000,
+                            position: {
+                                x: 'right',
+                                y: 'top',
+                            },
+
+                        })
+                        // alert('login please');
+                    }
+                }
+            })
+        }
+
+        //image zoom effect
+        $(document).ready(function () {
+            $(".block__pic").imagezoomsl({
+                zoomrange: [1,1]
+            });
+        });
+
+        //sharing button links
+        var pageUrl = location.href;
+        tweet = `https://twitter.com/intent/tweet?text=${pageUrl}`;
+        whats = `https://wa.me/?text=${pageUrl}`;
+        telegramApi = `https://t.me/share/url?url=${pageUrl}`;
+
+        const twitter = document.querySelector('.twitter');
+        const whatsapp = document.querySelector('.whatsapp');
+        const telegram = document.querySelector('.telegram');
+
+        twitter.addEventListener('click', ()=>{
+        window.open(url=tweet, target='blank');
+        })
+
+        whatsapp.addEventListener('click', ()=>{
+        window.open(url=whats, target='blank');
+        })
+
+        telegram.addEventListener('click', ()=>{
+        window.open(url=telegramApi, target='blank');
+        })
+                                        
+    </script>
+
+
+</body>
+
+</html>

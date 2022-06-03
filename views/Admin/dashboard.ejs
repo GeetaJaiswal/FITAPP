@@ -1,0 +1,1085 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Dashboard</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+	<link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+	<div class="top-bar d-flex justify-content-end align-items-center">
+		<div class="dropdown" style="margin-right:40px">
+			<img src="/images/profile-img.png" class="dropbtn" alt="profile" width="40px">
+			<div class="dropdown-content">
+				<div class="mb-2">
+					<button type="submit" class="border-0 bg-transparent" data-bs-toggle="modal"
+						data-bs-target="#changePasswordModal"><i class="fa-solid fa-lock pe-3"></i>Change
+						Password</button>
+				</div>
+				<form action="/admin/logout" method="post">
+					<button type="submit" class="border-0 bg-transparent"><i
+							class="fas fa-sign-out pe-3"></i>Logout</button>
+				</form>
+			</div>
+		</div>
+		<!-- <i class="fas fa-sign-out pe-4 text-light"></i> -->
+	</div>
+	<div class="wrapper d-flex align-items-stretch">
+		<%- include('../partials/admin-sidebar.ejs') %>
+			<!-- Page Content  -->
+			<div id="content" class="p-4 px-md-5 pt-3 content wrapper">
+				<!-- <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat odio hic earum quasi labore iste, magnam
+				non quos adipisci, exercitationem tempora quod dolores nobis illo alias corporis velit eos in!</p> -->
+				<h4>Dashboard</h4>
+				<div class="row mb-lg-2 mb-sm-4 ">
+					<div class="col-lg-12 col-md-12 mb-2">
+						<div style="background-color : #1e4261">
+							<div class="row d-flex">
+								<div class="col-xl-4 col-md-4 mb-1">
+									<div class="h-100 p-lg-4 p-sm-2">
+										<div class="card-body">
+
+											<div class="row no-gutters align-items-center">
+												<div class="col text-light">
+													<div class="text-xs fs-6 font-weight-bold text-uppercase mb-1">
+														Total Transaction</div>
+													<div class="h3 mb-0 font-weight-bold totalPnl d-inline">₹ <%- transaction.toLocaleString() %></div>
+
+													<!-- <span class="per-change"><i class="fas fa-caret-up px-1 text-success"></i>47%</span> -->
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-shuffle fa-3x"
+														style="color: rgb(216, 202, 202);"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+
+								<!-- Earnings (Monthly) Card Example -->
+								<div class="col-xl-4 col-md-4 mb-1">
+									<div class="h-100 p-lg-4 p-sm-2">
+										<div class="card-body">
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2 text-light">
+													<div class="text-xs fs-6 font-weight-bold  text-uppercase mb-1">
+														Total Users</div>
+													<div class="h3 mb-0 font-weight-bold niftyPnl d-inline"> <%- userCount %> </div>
+													<!-- <span class="per-change"><i class="fas fa-caret-down px-1 text-danger"></i>47%</span> -->
+												</div>
+												<div class="col-auto">
+													<i class="fa-solid fa-users fa-3x"
+														style="color: rgb(216, 202, 202);"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<!-- Pending Requests Card Example -->
+								<div class="col-xl-4 col-md-4 mb-1">
+									<div class=" h-100 p-lg-4 p-sm-2">
+										<div class="card-body">
+
+											<div class="row no-gutters align-items-center">
+												<div class="col mr-2 text-light">
+													<div class="text-xs fs-6 font-weight-bold text-uppercase mb-1">
+														Total Orders</div>
+													<div class="h3 mb-0 font-weight-bold bankniftyPnl d-inline"> <%- orders %>
+													</div>
+
+													<!-- <span class="per-change"><i class="fas fa-caret-up px-1 text-success"></i>47%</span> -->
+												</div>
+												<div class="col-auto">
+													<i class="fas fa-wallet fa-3x"
+														style="color: rgb(216, 202, 202);"></i>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+
+				<div class="row mt-4">
+					<div class="col-lg-7 col-12">
+						<div class="container con py-4">
+							<div class="d-flex justify-content-between timeframe">
+								<div>
+									<p><b>Balance Summary</b></p>
+								</div>
+								<script>var month=[], balance=[];</script>
+								<% for(i=0;i<BalSummary.length;i++){ %>
+									<script>month.push('<%- BalSummary[i]._id %>');</script>
+									<script>balance.push('<%- BalSummary[i].total %>');</script>
+								<% } %>
+								<!-- <div>
+								<button type="submit" class="btn btn-sm btn-light shadow-none">Day</button>
+								<button type="submit"
+									class="btn btn-sm btn-light shadow-none bg-transparent text-light">Week</button>
+								<button type="submit"
+									class="btn btn-sm btn-light shadow-none bg-transparent text-light">Month</button>
+							</div> -->
+							</div>
+							<div id="chart"></div>
+							<br>
+						</div>
+					</div>
+					<div class="col-lg-5 col-12 mt-md-0 mt-5">
+						<div class="con py-4">
+							<div class="d-flex justify-content-between timeframe mb-3 px-3">
+								<div>
+									<b>Current Month Transaction</b>
+								</div>
+								
+								<!-- <div>
+								<button type="submit" class="btn btn-sm btn-light shadow-none">Day</button>
+								<button type="submit"
+									class="btn btn-sm btn-light shadow-none bg-transparent text-light">Week</button>
+								<button type="submit"
+									class="btn btn-sm btn-light shadow-none bg-transparent text-light">Month</button>
+							</div> -->
+							</div>
+							<div id="chartPie" class="con pb-3"></div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="row mt-4">
+				<div class="col-lg-4 col-12">
+					<div class="container con pt-3">
+						<div>
+							<div class="d-flex justify-content-between">
+								<div>Indian</div>
+								<div>$8794</div>
+							</div>
+							<div id="indianLineChart"></div>
+						</div>
+						<br>
+					</div>
+				</div>
+				<div class="col-lg-4 col-12 mt-md-0 mt-4">
+					<div class="container con pt-3">
+						<div>
+							<div class="d-flex justify-content-between">
+								<div>Crypto</div>
+								<div>$3456</div>
+							</div>
+							<div id="cryptoLineChart"></div>
+						</div>
+						<br>
+					</div>
+				</div>
+				<div class="col-lg-4 col-12 mt-md-0 mt-4">
+					<div class="container con pt-3">
+						<div>
+							<div class="d-flex justify-content-between">
+								<div>Crypto</div>
+								<div>$9789</div>
+							</div>
+							<div id="forexLineChart"></div>
+						</div>
+						<br>
+					</div>
+				</div>
+			</div> -->
+
+				<div class="row mt-4">
+					<div class="col-lg-5 col-12 mt-md-0">
+						<div class="container con pt-4 pb-0">
+							<div class="d-flex justify-content-between">
+								<div>
+									<b>Current Month Sales</b>
+								</div>
+								<!-- <div>
+								<div class="d-flex justify-content-center align-items-baseline">
+									<h3 class="text-center me-1 d-inline">₹ 6780</h3><span class="me-1	 per-change"><i
+											class="fas fa-caret-up px-1 text-success"></i>15%</span>
+								</div>
+								<h6 class="text-secondary">Average P&L Per Day</h6>
+							</div> -->
+							</div>
+							<!-- <div id="columnChart"></div> -->
+							<div id="monthChart"></div>
+						</div>
+					</div>
+					<div class="col-lg-7 mt-md-0 mt-4">
+						<div class="con p-3">
+							<h6>Top Selling Products by Category</h6><br>
+							<div class="stock-status d-flex justify-content-between align-items-center p-2">
+								<img src="/uploads/1.1.jpg" alt="" width="10%">
+								<p class="px-3">Creattoes Men's Running Sport Shoes Gym Fitness & Outdoor</p>
+								<p>₹ 87909 Sales</p>
+							</div>
+							<div class="stock-status d-flex justify-content-between align-items-center p-2">
+								<img src="/uploads/1.1.jpg" alt="" width="10%">
+								<p class="px-3">Creattoes Men's Running Sport Shoes Gym Fitness & Outdoor</p>
+								<p>₹ 87909 Sales</p>
+							</div>
+							<div class="stock-status d-flex justify-content-between align-items-center p-2">
+								<img src="/uploads/1.1.jpg" alt="" width="10%">
+								<p class="px-3">Creattoes Men's Running Sport Shoes Gym Fitness & Outdoor</p>
+								<p>₹ 87909 Sales</p>
+							</div>
+							<div class="stock-status d-flex justify-content-between align-items-center p-2">
+								<img src="/uploads/1.1.jpg" alt="" width="10%">
+								<p class="px-3">Creattoes Men's Running Sport Shoes Gym Fitness & Outdoor</p>
+								<p>₹ 87909 Sales</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- <div class="row mt-4">
+				<div class="col-lg-6 col-12 mt-md-0">
+					<div class="container con pt-3">
+						<div class="d-flex justify-content-between">
+							<div>
+								<b>Sales by Gender</b>
+							</div>
+							<div>
+								<div class="d-flex justify-content-center align-items-baseline">
+									<h3 class="text-center me-1 d-inline">₹ 6780</h3><span class="me-1	 per-change"><i
+											class="fas fa-caret-up px-1 text-success"></i>15%</span>
+								</div>
+								<h6 class="text-secondary">Average P&L Per Day</h6>
+							</div> -->
+				<!-- </div> -->
+				<!-- <div id="columnChart"></div> -->
+				<!-- <div id="genderChart"></div>
+					</div>
+				</div>
+				<div class="col-lg-4 col-12">
+					 <div class="container con pt-3">
+						<div>
+							<div id="radialChart"></div>
+						</div>
+						<br>
+					</div> 
+				</div>
+			</div> -->
+		</div>
+	</div>
+
+
+	<!-- ######  change Password   ###### -->
+	<div class="modal fade" id="changePasswordModal" tabindex="-1" aria-labelledby="changePasswordModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="changePasswordModalLabel">Modal title</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<form id="changePassword">
+						<div class="row">
+							<div class="col-12">
+								<div class="form-group">
+									<input type="email" name="adminEmail" id="adminEmail"
+										class="dropDark mb-2 form-control shadow-none" value="<%- username %>" disabled
+										required>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<input type="password" name="adminPassword" id="adminPassword"
+										class="dropDark mb-2 form-control shadow-none" placeholder="Enter new Password"
+										pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+										title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+										required>
+								</div>
+							</div>
+							<div class="col-12">
+								<div class="form-group">
+									<input type="password" name="adminRetype" id="adminRetype"
+										class="dropDark mb-2 form-control shadow-none" placeholder="Retype Password"
+										required>
+								</div>
+							</div>
+						</div>
+						<br>
+						<div class="modal-footer">
+							<input type="submit" class="btn primary-btn shadow-none">
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+	<script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+		integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<!-- <script src='https://cdn.plot.ly/plotly-2.9.0.min.js'></script> -->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+	<script src="js/main.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+
+	<script>
+		var options1 = {
+			series: [{
+				// name: "STOCK ABC",
+				// data: [8107.85, 8128, 8122.9, 8165.5, 8340.7, 8423.7, 8423.5, 8514.3, 8481.85, 8487.7, 8506.9, 8626.2, 8668.95, 8602.3, 8607.55, 8512.9, 8496.25, 8600.65, 8881.1, 9340.85
+				// ],
+				name: 'Transaction',
+				data: balance,
+			}],
+			chart: {
+				type: 'area',
+				height: 297,
+				parentHeightOffset: 0,
+				zoom: {
+					enabled: false
+				},
+				toolbar: {
+					// show: true,
+					tools: {
+						download: false
+					}
+				},
+			},
+			dataLabels: {
+				enabled: false
+			},
+			stroke: {
+				curve: 'smooth',
+				width: 2,
+			},
+			// title: {
+			// text: 'Fundamental Analysis of Market',
+			// align: 'left',
+			// style: {
+			// 	color: '#fff'
+			// },
+			// },
+			// subtitle: {
+			// 	text: 'Price Movements',
+			// 	align: 'left',
+			// 	style: {
+			// 		color: '#fff'
+			// 	},
+			// },
+			// labels: ['Nov 13 2017', 'Nov 14 2017', 'Wed Nov 15 2017', 'Thu Nov 16 2017', 'Fri Nov 17 2017', 'Mon Nov 20 2017', 'Tue Nov 21 2017', 'Wed Nov 22 2017', 'Thu Nov 23 2017', 'Fri Nov 24 2017', 'Mon Nov 27 2017', 'Tue Nov 28 2017', 'Wed Nov 29 2017', 'Thu Nov 30 2017', 'Fri Dec 01 2017', 'Mon Dec 04 2017', 'Tue Dec 05 2017', 'Wed Dec 06 2017', 'Thu Dec 07 2017', 'Fri Dec 08 2017'
+			// ],
+			labels: month,
+			xaxis: {
+				type: 'datetime',
+				labels: {
+					show: true,
+					style: {
+						colors: '#fff',
+					},
+
+
+				}
+			},
+			yaxis: {
+				opposite: true,
+				labels: {
+					show: true,
+					style: {
+						colors: '#fff',
+					},
+					formatter: function (val) {
+						return val.toFixed(0)
+					},
+				},
+			},
+			legend: {
+				horizontalAlign: 'left',
+			},
+			grid: {
+				show: false,
+				xaxis: {
+					lines: {
+						show: false
+					},
+				},
+			},
+			tooltip: {
+				enabled: true,
+				fillSeriesColor: true,
+				theme: true,
+				colors: '#000',
+				style: {
+					colors: '#000'
+				},
+			},
+			fill: {
+				type: "gradient",
+				gradient: {
+					shadeIntensity: 1,
+					inverseColors: false,
+					opacityFrom: 0.5,
+					opacityTo: 0,
+					stops: [0, 90, 100]
+				}
+			},
+		};
+
+		var chart1 = new ApexCharts(document.querySelector("#chart"), options1);
+		chart1.render();
+
+
+
+		var options2 = {
+			series: [<%- shirtPrice %>,<%- shoePrice %>,<%- dumbPrice %>, <%- watchPrice %>],
+			labels: ['Shirt', 'Shoes', 'Dumbbell', 'Watch'],
+			chart: {
+				type: 'donut',
+				width: 406,
+			},
+			stroke: {
+				colors: 'transparent'
+			},
+			// title: {
+			// 	text: 'Fundamental Analysis of Stocks',
+			// 	align: 'left'
+			// },
+			legend: {
+				position: 'bottom',
+				labels: {
+					colors: '#fff',
+				},
+			},
+			responsive: [{
+				breakpoint: 400,
+				options: {
+					chart: {
+						width: 250,
+					},
+					legend: {
+						position: 'bottom'
+					}
+				}
+			}]
+		};
+
+		var chart2 = new ApexCharts(document.querySelector("#chartPie"), options2);
+		chart2.render();
+
+
+		// var options3 = {
+		// 	series: [{
+		// 		// name: "STOCK ABC",
+		// 		data: [1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09, 0.34, 3.88, 13.07,
+		// 			5.8, 2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8, -27.03, -54.4, -47.2, -43.3, -18.6, -
+		// 			48.6, -41.1, -39.6, -37.6, -29.4, -21.4, -2.4
+		// 		],
+		// 	}],
+		// 	chart: {
+		// 		type: 'bar',
+		// 		height: 220,
+		// 		parentHeightOffset: 0,
+		// 		zoom: {
+		// 			enabled: false
+		// 		},
+		// 		toolbar: {
+		// 			// show: true,
+		// 			tools: {
+		// 				download: false
+		// 			}
+		// 		}
+		// 	},
+		// 	dataLabels: {
+		// 		enabled: false
+		// 	},
+		// 	stroke: {
+		// 		curve: 'smooth',
+		// 		width: 2,
+		// 		colors: '#fff',
+		// 	},
+		// 	// title: {
+		// 	// 	text: 'Indian',
+		// 	// 	align: 'left',
+		// 	// 	style: {
+		// 	// 		color: '#fff'
+		// 	// 	},
+		// 	// },
+		// 	// subtitle: {
+		// 	// 	text: '$2345',
+		// 	// 	align: 'left',
+		// 	// 	style: {
+		// 	// 		color: '#fff'
+		// 	// 	},
+		// 	// },
+		// 	labels: ['Mon Nov 13 2017', 'Tue Nov 14 2017', 'Wed Nov 15 2017', 'Thu Nov 16 2017', 'Fri Nov 17 2017', 'Mon Nov 20 2017', 'Tue Nov 21 2017', 'Wed Nov 22 2017', 'Thu Nov 23 2017', 'Fri Nov 24 2017', 'Mon Nov 27 2017', 'Tue Nov 28 2017', 'Wed Nov 29 2017', 'Thu Nov 30 2017', 'Fri Dec 01 2017', 'Mon Dec 04 2017', 'Tue Dec 05 2017', 'Wed Dec 06 2017', 'Thu Dec 07 2017', 'Fri Dec 08 2017'
+		// 	],
+		// 	xaxis: {
+		// 		// type: 'datetime',
+		// 		labels: {
+		// 			show: false
+		// 		},
+		// 		axisBorder: {
+		// 			show: false,
+		// 		},
+		// 		axisTicks: {
+		// 			show: false,
+		// 		},
+		// 	},
+		// 	plotOptions: {
+		// 		bar: {
+		// 			colors: {
+		// 				ranges: [{
+		// 					from: -100,
+		// 					to: 0,
+		// 					color: '#F15B46'
+		// 				}, {
+		// 					from: 100,
+		// 					to: 0,
+		// 					color: '#FEB019	'
+		// 				}]
+		// 			},
+		// 			columnWidth: '80%',
+		// 		}
+		// 	},
+		// 	yaxis: {
+		// 		// opposite: true
+		// 		show: false
+		// 	},
+		// 	legend: {
+		// 		horizontalAlign: 'left',
+		// 	},
+		// 	grid: {
+		// 		show: false,
+		// 		xaxis: {
+		// 			lines: {
+		// 				show: false
+		// 			},
+		// 		},
+		// 	},
+		// 	tooltip: {
+		// 		enabled: true,
+		// 		fillSeriesColor: true,
+		// 		theme: true,
+		// 		colors: '#000',
+		// 		style: {
+		// 			colors: '#000'
+		// 		},
+		// 	}
+		// };
+
+		// var chart3 = new ApexCharts(document.querySelector("#indianLineChart"), options3);
+		// chart3.render();
+
+
+		// var options4 = {
+		// 	series: [{
+		// 		// name: "STOCK ABC",
+		// 		data: [1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09, 0.34, 3.88, 13.07,
+		// 			5.8, 2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8, -27.03, -54.4, -47.2, -43.3, -18.6, -
+		// 			48.6, -41.1, -39.6, -37.6, -29.4, -21.4, -2.4
+		// 		],
+		// 	}],
+		// 	chart: {
+		// 		type: 'bar',
+		// 		height: 220,
+		// 		parentHeightOffset: 0,
+		// 		zoom: {
+		// 			enabled: false
+		// 		},
+		// 		toolbar: {
+		// 			// show: true,
+		// 			tools: {
+		// 				download: false
+		// 			}
+		// 		}
+		// 	},
+		// 	dataLabels: {
+		// 		enabled: false
+		// 	},
+		// 	stroke: {
+		// 		curve: 'smooth',
+		// 		width: 2,
+		// 		colors: '#fff',
+		// 	},
+
+		// 	// title: {
+		// 	// 	text: 'Crypto',
+		// 	// 	align: 'left',
+		// 	// 	style: {
+		// 	// 		color: '#fff'
+		// 	// 	},
+		// 	// },
+		// 	// subtitle: {
+		// 	// 	text: '$2345',
+		// 	// 	align: 'left',
+		// 	// 	style: {
+		// 	// 		color: '#fff'
+		// 	// 	},
+		// 	// },
+		// 	labels: ['Mon Nov 13 2017', 'Tue Nov 14 2017', 'Wed Nov 15 2017', 'Thu Nov 16 2017', 'Fri Nov 17 2017', 'Mon Nov 20 2017', 'Tue Nov 21 2017', 'Wed Nov 22 2017', 'Thu Nov 23 2017', 'Fri Nov 24 2017', 'Mon Nov 27 2017', 'Tue Nov 28 2017', 'Wed Nov 29 2017', 'Thu Nov 30 2017', 'Fri Dec 01 2017', 'Mon Dec 04 2017', 'Tue Dec 05 2017', 'Wed Dec 06 2017', 'Thu Dec 07 2017', 'Fri Dec 08 2017'
+		// 	],
+		// 	xaxis: {
+		// 		// type: 'datetime',
+		// 		labels: {
+		// 			show: false
+		// 		},
+		// 		axisBorder: {
+		// 			show: false,
+		// 		},
+		// 		axisTicks: {
+		// 			show: false,
+		// 		},
+		// 	},
+		// 	plotOptions: {
+		// 		bar: {
+		// 			colors: {
+		// 				ranges: [{
+		// 					from: -100,
+		// 					to: 0,
+		// 					color: '#F15B46'
+		// 				}, {
+		// 					from: 100,
+		// 					to: 0,
+		// 					color: '#FEB019	'
+		// 				}]
+		// 			},
+		// 			columnWidth: '80%',
+		// 		}
+		// 	},
+		// 	yaxis: {
+		// 		// opposite: true
+		// 		show: false
+		// 	},
+		// 	legend: {
+		// 		horizontalAlign: 'left',
+		// 	},
+		// 	grid: {
+		// 		show: false,
+		// 		xaxis: {
+		// 			lines: {
+		// 				show: false
+		// 			},
+		// 		},
+		// 	},
+		// 	tooltip: {
+		// 		enabled: true,
+		// 		fillSeriesColor: true,
+		// 		theme: true,
+		// 		colors: '#000',
+		// 		style: {
+		// 			colors: '#000'
+		// 		},
+		// 	}
+		// };
+
+		// var chart4 = new ApexCharts(document.querySelector("#cryptoLineChart"), options4);
+		// chart4.render();
+
+
+		// var options5 = {
+		// 	series: [{
+		// 		// name: "STOCK ABC",
+		// 		data: [1.45, 5.42, 5.9, -0.42, -12.6, -18.1, -18.2, -14.16, -11.1, -6.09, 0.34, 3.88, 13.07,
+		// 			5.8, 2, 7.37, 8.1, 13.57, 15.75, 17.1, 19.8, -27.03, -54.4, -47.2, -43.3, -18.6, -
+		// 			48.6, -41.1, -39.6, -37.6, -29.4, -21.4, -2.4
+		// 		],
+		// 	}],
+		// 	chart: {
+		// 		type: 'bar',
+		// 		height: 220,
+		// 		parentHeightOffset: 0,
+		// 		zoom: {
+		// 			enabled: false
+		// 		},
+		// 		toolbar: {
+		// 			// show: true,
+		// 			tools: {
+		// 				download: false
+		// 			}
+		// 		},
+		// 	},
+		// 	dataLabels: {
+		// 		enabled: false
+		// 	},
+		// 	stroke: {
+		// 		curve: 'smooth',
+		// 		width: 2,
+		// 		colors: '#fff',
+		// 	},
+		// 	// title: {
+		// 	// 	text: 'Forex',
+		// 	// 	align: 'left',
+		// 	// 	style: {
+		// 	// 		color: '#fff'
+		// 	// 	},
+		// 	// },
+		// 	// subtitle: {
+		// 	// 	text: '$2345',
+		// 	// 	align: 'left',
+		// 	// 	style: {
+		// 	// 		color: '#fff'
+		// 	// 	},
+		// 	// },
+		// 	labels: ['Mon Nov 13 2017', 'Tue Nov 14 2017', 'Wed Nov 15 2017', 'Thu Nov 16 2017', 'Fri Nov 17 2017', 'Mon Nov 20 2017', 'Tue Nov 21 2017', 'Wed Nov 22 2017', 'Thu Nov 23 2017', 'Fri Nov 24 2017', 'Mon Nov 27 2017', 'Tue Nov 28 2017', 'Wed Nov 29 2017', 'Thu Nov 30 2017', 'Fri Dec 01 2017', 'Mon Dec 04 2017', 'Tue Dec 05 2017', 'Wed Dec 06 2017', 'Thu Dec 07 2017', 'Fri Dec 08 2017'
+		// 	],
+		// 	xaxis: {
+		// 		// type: 'datetime',
+		// 		labels: {
+		// 			show: false
+		// 		},
+		// 		axisBorder: {
+		// 			show: false,
+		// 		},
+		// 		axisTicks: {
+		// 			show: false,
+		// 		},
+		// 	},
+		// 	plotOptions: {
+		// 		bar: {
+		// 			colors: {
+		// 				ranges: [{
+		// 					from: -100,
+		// 					to: 0,
+		// 					color: '#F15B46'
+		// 				}, {
+		// 					from: 100,
+		// 					to: 0,
+		// 					color: '#FEB019	'
+		// 				}]
+		// 			},
+		// 			columnWidth: '80%',
+		// 		}
+		// 	},
+		// 	yaxis: {
+		// 		// opposite: true
+		// 		show: false
+		// 	},
+		// 	legend: {
+		// 		horizontalAlign: 'left',
+		// 	},
+		// 	grid: {
+		// 		show: false,
+		// 		xaxis: {
+		// 			lines: {
+		// 				show: false
+		// 			},
+		// 		},
+		// 	},
+		// 	tooltip: {
+		// 		enabled: true,
+		// 		fillSeriesColor: true,
+		// 		theme: true,
+		// 		colors: '#000',
+		// 		style: {
+		// 			colors: '#000'
+		// 		},
+		// 	}
+		// };
+
+		// var chart5 = new ApexCharts(document.querySelector("#forexLineChart"), options5);
+		// chart5.render();
+
+
+
+		// var options6 = {
+		// 	series: [{
+		// 		name: 'Yesterday',
+		// 		data: [44, 55, 41]
+		// 	}, {
+		// 		name: 'Today',
+		// 		data: [13, 23, 20]
+		// 	}],
+		// 	chart: {
+		// 		type: 'bar',
+		// 		height: 313,
+		// 		stacked: false,
+		// 		toolbar: {
+		// 			show: false
+		// 		},
+		// 		zoom: {
+		// 			enabled: false
+		// 		},
+		// 	},
+		// 	responsive: [{
+		// 		breakpoint: 480,
+		// 		options: {
+		// 			legend: {
+		// 				position: 'bottom',
+		// 				offsetX: -10,
+		// 				offsetY: 0
+		// 			}
+		// 		}
+		// 	}],
+		// 	plotOptions: {
+		// 		bar: {
+		// 			horizontal: false,
+		// 			borderRadius: 4,
+		// 		},
+		// 	}, dataLabels: {
+		// 		enabled: false,
+		// 	},
+		// 	grid: {
+		// 		show: false,
+		// 		xaxis: {
+		// 			lines: {
+		// 				show: false
+		// 			},
+		// 		},
+		// 	},
+		// 	xaxis: {
+		// 		type: 'date',
+		// 		categories: ['Indian', 'Crypto', 'Forex'],
+		// 		labels: {
+		// 			show: true,
+		// 			style: {
+		// 				colors: '#fff',
+		// 			},
+		// 		}
+		// 	},
+		// 	yaxis: {
+		// 		// opposite: true,
+		// 		labels: {
+		// 			show: true,
+		// 			style: {
+		// 				colors: '#fff',
+
+		// 			},
+		// 		},
+		// 	},
+		// 	legend: {
+		// 		position: 'right',
+		// 		offsetY: 40
+		// 	},
+		// 	fill: {
+		// 		opacity: 1
+		// 	},
+		// 	legend: {
+		// 		labels: {
+		// 			colors: '#fff',
+		// 		},
+		// 	},
+		// 	tooltip: {
+		// 		enabled: true,
+		// 		fillSeriesColor: true,
+		// 		theme: true,
+		// 		colors: '#000',
+		// 		style: {
+		// 			colors: '#000'
+		// 		},
+		// 	}
+		// };
+
+		// var chart6 = new ApexCharts(document.querySelector("#columnChart"), options6);
+		// chart6.render();
+
+
+		// var options7 = {
+		// 	series: [44, 55],
+		// 	labels: ['Male', 'Female'],
+		// 	chart: {
+		// 		type: 'donut',
+		// 		width: 406,
+		// 	},
+		// 	stroke: {
+		// 		colors: 'transparent'
+		// 	},
+		// 	// title: {
+		// 	// 	text: 'Fundamental Analysis of Stocks',
+		// 	// 	align: 'left'
+		// 	// },
+		// 	legend: {
+		// 		position: 'bottom',
+		// 		labels: {
+		// 			colors: '#fff',
+		// 		},
+		// 	},
+		// 	responsive: [{
+		// 		breakpoint: 400,
+		// 		options: {
+		// 			chart: {
+		// 				width: 250,
+		// 			},
+		// 			legend: {
+		// 				position: 'bottom'
+		// 			}
+		// 		}
+		// 	}]
+		// };
+
+		// var chart2 = new ApexCharts(document.querySelector("#genderChart"), options7);
+		// chart2.render();
+
+
+		var options8 = {
+			series: [{
+				name: 'Quantity',
+				data: ['<%- catShirt %>', '<%- catShoes %>', '<%- catDumbbell %>', '<%- catWatch %>']
+			}],
+			chart: {
+				height: 350,
+				type: 'bar',
+				// events: {
+				// 	click: function (chart, w, e) {
+				// 		// console.log(chart, w, e)
+				// 	}
+				// }
+				toolbar: {
+					// show: true,
+					tools: {
+						download: false
+					}
+				}
+			},
+			// colors: 'colors',
+			plotOptions: {
+				bar: {
+					columnWidth: '45%',
+					distributed: true,
+				}
+			},
+			dataLabels: {
+				enabled: false
+			},
+			legend: {
+				show: false
+			},
+			xaxis: {
+				categories: [
+					'Shirt',
+					'Shoes',
+					'Dumbbell',
+					'Watch',
+				],
+				labels: {
+					style: {
+						colors: '#fff',
+						fontSize: '12px'
+					}
+				}
+			},
+			yaxis: {
+				labels: {
+					style: {
+						colors: '#fff',
+						fontSize: '12px'
+					}
+				}
+			},
+			grid: {
+				show: false,
+				xaxis: {
+					lines: {
+						show: false
+					},
+				},
+			},
+			tooltip: {
+				enabled: true,
+				fillSeriesColor: true,
+				theme: true,
+				colors: '#000',
+				style: {
+					colors: '#000'
+				},
+			},
+
+		};
+
+		var chart7 = new ApexCharts(document.querySelector("#monthChart"), options8);
+		chart7.render();
+
+
+
+		// ##### Edit Password #####
+		var notyf = new Notyf();
+
+		const form = document.getElementById('changePassword')
+		form.addEventListener('submit', changePassword)
+
+		async function changePassword(event) {
+			event.preventDefault();
+			username = $('#adminEmail').val();
+			password = $('#adminPassword').val();
+			reTypePass = $('#adminRetype').val();
+			$.ajax({
+				type: 'POST',
+				url: '/admin/changePassword',
+				data: { username, password, reTypePass },
+				success: function (res) {
+					if (res.data == 'ok') {
+						notyf.success({
+							message: 'Password has been changed',
+							duration: 2000,
+							position: {
+								x: 'right',
+								y: 'top',
+							},
+						})
+						$('#changePasswordModal').modal('hide');
+						$('.modal-backdrop').remove();
+					}
+					else if (res.data == 'notChange') {
+						notyf.error({
+							message: 'Something wrong! Try again',
+							duration: 2000,
+							position: {
+								x: 'right',
+								y: 'top',
+							},
+						})
+					}
+					else if (res.data == 'passNotMatch') {
+						notyf.error({
+							message: 'Both Passwords must be same',
+							duration: 2000,
+							position: {
+								x: 'right',
+								y: 'top',
+							},
+						})
+					}
+					else if (res.data == 'cred') {
+						notyf.error({
+							message: 'Some Error! Try again',
+							duration: 2000,
+							position: {
+								x: 'right',
+								y: 'top',
+							},
+						})
+					}
+					else {
+						notyf.error({
+							message: 'Something is wrong',
+							duration: 2000,
+							position: {
+								x: 'right',
+								y: 'top',
+							},
+						})
+					}
+				}
+			})
+		}
+
+
+
+	</script>
+
+</body>
+
+</html>

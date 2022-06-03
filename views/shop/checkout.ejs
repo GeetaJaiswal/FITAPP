@@ -1,0 +1,214 @@
+<!-- <!DOCTYPE html>
+<html lang="zxx">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Ogani Template">
+        <meta name="keywords" content="Ogani, unica, creative, html">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Ogani | Template</title>
+    
+        <!-- Google Font -->
+        <title>Checkout</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+    
+        <!-- Css Styles -->
+        <link rel="stylesheet" href="/shop/css/bootstrap.min.css" type="text/css">
+        <!-- <link rel="stylesheet" href="/shop/css/font-awesome.min.css" type="text/css"> -->
+        <!-- <link rel="stylesheet" href="/shop/css/elegant-icons.css" type="text/css"> -->
+        <link rel="stylesheet" href="/shop/css/nice-select.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/jquery-ui.min.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/owl.carousel.min.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/slicknav.min.css" type="text/css">
+        <link rel="stylesheet" href="/shop/css/style.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+     <!-- navbar -->
+     <%- include('../partials/head.ejs') %>
+
+    <!-- Checkout Section Begin -->
+    <section class="checkout spad" style="margin-top: -50px;">
+        <div class="container">
+            <div class="checkout__form">
+                <h4>Billing Details</h4>
+                <form action="/paynow" method="post">
+                    <div class="row">
+                        <div class="col-lg-8 col-md-6">
+                            <div class="row">
+                                <input type="hidden" name="user_id" value="<%- userData._id %>">
+                                <input type="hidden" name="totalAmount" id="" value="<%- subtotal %>">
+                                <script> var products = [], quantity = [];</script>
+                                <% k=0; for(i=0;i<cartDetails.length;i++){ %>
+                                   <script> products.push(JSON.stringify('<%- cartDetails[i][0]._id %>')); </script>
+                                   <script> quantity.push(JSON.stringify('<%- quantity[k] %>')); </script>
+                                <% k++;  } %>
+                                <input type="hidden" id="products" name="products">
+                                <input type="hidden" id="proQuant" name="proQuant">
+                                <!-- <script>console.log(products);</script> -->
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Name<span>*</span></p>
+                                        <input type="text" name="name" value="<%- userData.name %>" required readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Email<span>*</span></p>
+                                        <input type="text" name="email" value="<%- userData.email %>" required readonly>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Phone<span>*</span></p>
+                                        <input type="text" name="contact" value="<%- userData.contact %>" pattern="[0-9]+" minlength="10" maxlength="10" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Country<span>*</span></p>
+                                        <input type="text" name="country" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>State/City</p>
+                                        <input type="text" name="state" required>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="checkout__input">
+                                        <p>Postcode / ZIP<span>*</span></p>
+                                        <input type="number" name="pincode" required>
+                                    </div>
+                                </div>    
+                                <div class="col-lg-12">
+                                    <div class="checkout__input">
+                                        <p>Address<span>*</span></p>
+                                        <input type="text" name="address" class="checkout__input__add" style="height:100px;" required>
+                                        <!-- <input type="text" placeholder="Apartment, suite, unite ect (optinal)"> -->
+                                    </div>
+                                </div>    
+                                <!-- <div class="checkout__input">
+                                    <p>Town/City<span>*</span></p>
+                                    <input type="text">
+                                </div> -->
+                                <!-- <div class="checkout__input">
+                                    <p>Country/State<span>*</span></p>
+                                    <input type="text">
+                                </div> -->
+                            </div>
+                            <!-- <div class="checkout__input__checkbox">
+                                <label for="acc">
+                                    Create an account?
+                                    <input type="checkbox" id="acc">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <p>Create an account by entering the information below. If you are a returning customer
+                                please login at the top of the page</p>
+                            <div class="checkout__input">
+                                <p>Account Password<span>*</span></p>
+                                <input type="text">
+                            </div>
+                            <div class="checkout__input__checkbox">
+                                <label for="diff-acc">
+                                    Ship to a different address?
+                                    <input type="checkbox" id="diff-acc">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="checkout__input">
+                                <p>Order notes<span>*</span></p>
+                                <input type="text"
+                                    placeholder="Notes about your order, e.g. special notes for delivery.">
+                            </div> -->
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            <div class="checkout__order">
+                                <h4>Your Order</h4>
+                                <div class="checkout__order__products">Products <span>Total</span></div>
+                                <ul>
+                                    <% let j=0; for(i=0;i<cartDetails.length;i++){ %>
+                                        <% let pro = "proQuantity"+i;
+                                           let proTotal = "proTotal"+i;
+                                        %>
+                                    <hr>    
+                                    <li><%- cartDetails[i][0].product_name %> <b>(<%- quantity[j] %>)</b><span> ₹ <%- (cartDetails[i][0].regular_price * quantity[j]).toLocaleString() %></span></li>
+                                    <% j++; } %>    
+                                </ul>
+                                <div class="checkout__order__subtotal">Subtotal <span>₹<%- subtotal.toLocaleString() %></span></div>
+                                <input type="hidden" name="amount" value="<%- subtotal.toLocaleString() %>">
+                                <div class="checkout__order__total">Total <span >₹<%- subtotal.toLocaleString() %></span></div>
+                                <button type="submit" class="site-btn" onclick="checkout()">PLACE ORDER</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer -->
+   <%- include('../partials/footer.ejs') %>
+
+    <!-- Js Plugins -->
+    <script src="/shop/js/jquery-3.3.1.min.js"></script>
+    <script src="/shop/js/bootstrap.min.js"></script>
+    <script src="/shop/js/jquery.nice-select.min.js"></script>
+    <script src="/shop/js/jquery-ui.min.js"></script>
+    <script src="/shop/js/jquery.slicknav.js"></script>
+    <script src="/shop/js/mixitup.min.js"></script>
+    <script src="/shop/js/owl.carousel.min.js"></script>
+    <script src="/shop/js/main.js"></script>
+
+    <script>
+        
+        document.getElementById('products').value =  products;
+        console.log(document.getElementById('products').value);
+        document.getElementById('proQuant').value =  quantity;
+        console.log(document.getElementById('proQuant').value);
+
+    
+
+        // function checkout(){
+        // firstname = $('#firstName').val();
+        // lastname = $('#lastName').val();
+        // email = $('#email').val();
+        // phone = $('#phone').val();
+        // country = $('#country').val();
+        // pincode = $('#pincode').val();
+        // address = $('#address').val();
+        // amount = 5678;
+        // // amount = $('total').text();
+        // if(lastname==' '){
+        //     lastname = ' '
+        // }
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/paynow',
+        //     data: {firstname:firstname, lastname:lastname, email:email, phone:phone, country:country, pincode:pincode, address:address, amount:amount},
+        //     success: function(res){
+        //         console.log(res);
+        //         // if(res.data=='ok'){
+                //     pPrice = quantity*proPrice;
+                //     $('#'+proTotalId).val(pPrice);
+                //     $('#subTotal').text("₹"+res.subtotal.toLocaleString());
+                //     $('#total').text("₹"+(res.subtotal).toLocaleString());
+                //     $('#cartTable').load(' #cartTable');
+                // }
+            // }   
+    //     })
+    // }
+    </script>
+
+</body>
+
+</html>

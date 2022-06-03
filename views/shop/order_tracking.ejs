@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ogani Template">
+    <meta name="keywords" content="Ogani, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Order Tracking</title>
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/shop/css/bootstrap.min.css" type="text/css">
+    <!-- <link rel="stylesheet" href="/shop/css/font-awesome.min.css" type="text/css"> -->
+    <!-- <link rel="stylesheet" href="/shop/css/elegant-icons.css" type="text/css"> -->
+    <link rel="stylesheet" href="/shop/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/shop/css/style.css" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <link rel="stylesheet" href="/shop/css/simplePagination.css">
+</head>
+
+
+<body>
+    <!-- Page Preloder -->
+    <!-- <div id="preloder">
+        <div class="loader"></div>
+    </div> -->
+
+
+    <!-- navbar -->
+    <%- include('../partials/head.ejs') %>
+
+
+        <div class="container mb-5 list-wrapper">
+            <% if(data){ %>
+                <div>
+                    <%- data.length %> order(s) placed
+                </div>
+                <div class="row  px-3">
+                    <div class="col-md-8">
+                        <% data.forEach((item)=> { %>
+                            <div class="row my-3 px-3 border orderDiv list-item">
+                                <!-- <div class="row"> -->
+                                <% k=0; d=0; for(var j=0; j<item.products.length; j++) { %>
+                                    <!-- <div class="col-md-2 col-12">
+                                    <img src="uploads/1.1.jpg" alt="product-img" srcset="">
+                                </div> -->
+                                    <div class="col-md-9 col-12 mt-3">
+                                        <small class="text-dark">
+                                            <%- item.timeStamp.toLocaleString() %>
+                                        </small>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a href="/product/<%- item.product_id[d] %>">
+                                                    <p style="color: #1e4261;">
+                                                        <%- item.products[j] %>
+                                                    </p>
+                                                </a>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="text-dark"><b>Quantity:</b>
+                                                    <%- item.quantity[k] %>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="col-md-1"></div> -->
+
+                                    <% k++; d++; } %>
+                                        <div class="col-md-3 col-12">
+                                            <h5 class="mb-4 text-center"><b class="px-3">Total Amount: </b><br>₹ <%-
+                                                    item.amount.toLocaleString() %>
+                                            </h5>
+                                            <% if(item.order_status=='Order Placed' ){ %>
+                                                <div class="bg-color p-2 text-center text-light">
+                                                    <%- item.order_status %>
+                                                </div>
+                                                <% } %>
+                                                    <% if(item.order_status=='Processing' ){ %>
+                                                        <div class="bg-primary p-2 text-center text-light">
+                                                            <%- item.order_status %>
+                                                        </div>
+                                                        <% } %>
+                                                            <% if(item.order_status=='On The Way' ){ %>
+                                                                <div class="bg-warning p-2 text-center text-light">
+                                                                    <%- item.order_status %>
+                                                                </div>
+                                                                <% } %>
+                                                                    <% if(item.order_status=='Delivered' ){ %>
+                                                                        <div
+                                                                            class="bg-success p-2 text-center text-light">
+                                                                            <%- item.order_status %>
+                                                                        </div>
+                                                                        <% } %>
+                                                                            <!-- <div class="bg-color p-2 text-center text-light mt-2">View Product</div> -->
+                                        </div>
+                                        <!-- </div> -->
+                            </div>
+                            <% }) %>
+                    </div>
+
+                    <div class="d-flex justify-content-end">
+                        <div id="pagination-container" class="d-block d-lg-none"></div>
+                    </div>
+
+                    <div class="col-md-4 my-4">
+                        <h5>Recent Products</h5>
+                        <hr>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <% products.forEach((item)=> { %>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <img src="uploads/<%- item.image %>">
+                                        </div>
+                                        <div class="col-md-9">
+                                            <p class="text-dark text-justify">
+                                                <%- item.product_name %>.
+                                            </p>
+                                            <div class="d-flex justify-content-end">
+                                                <a href="/product/<%- item._id %>"><button
+                                                        class="btn border-0 mt-2 mb-4 text-light shadow-none"
+                                                        style="background-color:#1e4261">View Product</button></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <% }) %>
+
+                            </div>
+                        </div>
+
+                        <img src="/shop/img/sideImg.gif" alt="" class="mt-5" style="height: 350px">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-start">
+                <div id="pagination-container-mobile" class="d-none d-lg-block"></div>
+            </div>
+                <% } else {%>
+                    <h4 class="text-center text-dark mt-5">No Orders</h4>
+                    <div class="d-flex justify-content-center my-4">
+                        <a href="/products"><button class="primary-btn border-0 mb-4">Shop Now</button></a>
+                    </div>
+                    <% } %>
+        </div>
+
+        <!-- footer -->
+        <%- include('../partials/footer.ejs') %>
+
+
+            <!-- Js Plugins -->
+            <script src="/shop/js/jquery-3.3.1.min.js"></script>
+            <script src="/shop/js/jquery.simplePagination.js"></script>
+            <script src="/shop/js/bootstrap.min.js"></script>
+            <script src="/shop/js/jquery.nice-select.min.js"></script>
+            <script src="/shop/js/jquery-ui.min.js"></script>
+            <script src="/shop/js/jquery.slicknav.js"></script>
+            <script src="/shop/js/mixitup.min.js"></script>
+            <script src="/shop/js/owl.carousel.min.js"></script>
+            <script src="/shop/js/main.js"></script>
+            <script src="/shop/js/pagination.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+            <script>
+                // ######## pagination ########    
+                var items = $(".list-wrapper .list-item");
+                var numItems = items.length;
+                var perPage = 3;
+
+                items.slice(perPage).hide();
+
+                $('#pagination-container').pagination({
+                    items: numItems,
+                    itemsOnPage: perPage,
+                    prevText: "&laquo;",
+                    nextText: "&raquo;",
+                    onPageClick: function (pageNumber) {
+                        var showFrom = perPage * (pageNumber - 1);
+                        var showTo = showFrom + perPage;
+                        items.hide().slice(showFrom, showTo).show();
+                    }
+                });
+                $('#pagination-container-mobile').pagination({
+                    items: numItems,
+                    itemsOnPage: perPage,
+                    prevText: "&laquo;",
+                    nextText: "&raquo;",
+                    onPageClick: function (pageNumber) {
+                        var showFrom = perPage * (pageNumber - 1);
+                        var showTo = showFrom + perPage;
+                        items.hide().slice(showFrom, showTo).show();
+                    }
+                });
+            </script>
+</body>
+
+</html>

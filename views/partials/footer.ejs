@@ -1,0 +1,125 @@
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+<style>
+    #myBtn {
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+  background-color: #1e4261;
+  color: white;
+  cursor: pointer;
+  padding: 10px 18px;
+  border-radius: 50%;
+}
+</style>
+
+<button onclick="topFunction()" id="myBtn"><i class="fa-solid fa-angle-up"></i></button>
+
+
+ <!-- Footer Section Begin -->
+ <footer class="footer spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="footer__about">
+                    <div class="footer__about__logo">
+                        <a href="./index.html"><img src="/shop/img/logo.png" alt=""></a>
+                    </div>
+                    <ul class="ps-0">
+                        <li>Address: 60-49 Road 11378 New Delhi</li>
+                        <li>Phone: +65 11.188.888</li>
+                        <li>Email: info@fitapp.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1 mt-3">
+                <div class="footer__widget">
+                    <h5><b>Useful Links</b></h5>
+                    <ul class="ps-0">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="/products">Shop</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <!-- <li><a href="#">Secure Shopping</a></li> -->
+                        <!-- <li><a href="#">Delivery infomation</a></li> -->
+                        <!-- <li><a href="#">Our Sitemap</a></li> -->
+                    </ul>
+                    <ul class="ps-0">
+                        <!-- <li><a href="#">Who We Are</a></li> -->
+                        <!-- <li><a href="#">Our Services</a></li>
+                        <li><a href="#">Projects</a></li> -->
+                        <li><a href="/order-tracking">Track Your Order</a></li>
+                        <li><a href="/cart">Cart</a></li>
+                        <li><a href="#">Fitness Check</a></li>
+                        <!-- <li><a href="#">Innovation</a></li>
+                        <li><a href="#">Testimonials</a></li> -->
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12 mt-3">
+                <div class="footer__widget">
+                    <!-- <h6>Join Our Newsletter Now</h6>
+                    <p>Get E-mail updates about our latest shop and special offers.</p> -->
+                    <h5><b>Follow us on Social Media</b></h5>
+                    <!-- <form action="#">
+                        <input type="text" placeholder="Enter your mail">
+                        <button type="submit" class="site-btn">Subscribe</button>
+                    </form> -->
+                    <div class="footer__widget__social mt-4">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="footer__copyright">
+                    <div class="footer__copyright__text">
+                        <p>
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            Copyright &copy;
+                            <script>document.write(new Date().getFullYear());</script> All rights reserved 
+                            <!-- | This
+                            template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a
+                                href="https://colorlib.com" target="_blank">Colorlib</a> -->
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </p>
+                    </div>
+                    <div class="footer__copyright__payment"><img src="/shop/img/payment-item.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Section End -->
+
+<script>
+    var mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
