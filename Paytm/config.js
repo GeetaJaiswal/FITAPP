@@ -1,6 +1,6 @@
 var PaytmConfig = {
-  mid: "KFluNc96003852966744",
-  key: "HzDv83U9VNlT4wXK",
+  mid: process.env.MID,
+  key: process.env.KEY,
   website: "WEBSTAGING",
 };
 module.exports.PaytmConfig = PaytmConfig;
