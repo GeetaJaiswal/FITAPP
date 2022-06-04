@@ -67,7 +67,7 @@
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <span class="dec qtybtn" onclick="qtyChange('<%- cartDetails[i][0]._id %>','<%- pro %>','<%- cartDetails[i][0].regular_price %>','<%- proTotal %>','minus')">-</span>
+                                                <span class="dec qtybtn" min="1" onclick="qtyChange('<%- cartDetails[i][0]._id %>','<%- pro %>','<%- cartDetails[i][0].regular_price %>','<%- proTotal %>','minus')">-</span>
                                                 <input type="text" value="<%- quantity[j] %>" id=<%- pro %>>
                                                 <span class="inc qtybtn" onclick="qtyChange('<%- cartDetails[i][0]._id %>','<%- pro %>','<%- cartDetails[i][0].regular_price %>','<%- proTotal %>','plus')">+</span>
                                             </div>

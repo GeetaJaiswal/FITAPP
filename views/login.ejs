@@ -318,7 +318,7 @@
         <span>Enter your 4 digit OTP pin </span>
         <br>
         <input type="password" id="enterotp1" placeholder="Password" />
-        <button type="submit">Submit OTP</button>
+        <button type="submit" class="text-dark">Submit OTP</button>
       </form>
     </div>
     <div class="form-container sign-in-container login-form-div">
@@ -357,7 +357,7 @@
       <form id="forgot-pass-otp-newpass" action="/api/forget/pass/otp/newpass" class="forgot-pass-otp-newpass">
         <div class="forgetBox">
           <span>Enter your new Password </span>
-          <input type="password" id="enterpass" placeholder="New Password">
+          <input type="password" id="enterpass" placeholder="New Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
           <input type="password" id="enterpass1" placeholder="Confirm Password">
           <button type="submit" class="text-dark">Submit</button>
         </div>
