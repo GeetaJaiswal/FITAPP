@@ -1,11 +1,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-
+<style>
+    li a {
+        color: inherit;
+    }
+</style>
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
             <a href="/">
-                <h3 style="color: #044782">FeelFit</h3>
+                <!-- <h3 style="color: #044782">FeelFit</h3> -->
                 <!-- <img src="/shop/img/logo.png" alt="" srcset=""> -->
             </a>
         </div>
@@ -53,6 +57,17 @@
         </div>
         <div class="humberger__menu__contact">
             <ul>
+                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/products">Shop</a></li>
+                <li><a href="#">Fitness Check</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/login">Login</a></li>
+                <li><a href="/cart">Shoping Cart</a></li>
+                <li><a href="/checkout">Check Out</a></li>
+                <!-- <li><a href="#">Blog Details</a></li> -->
+                <li><a href="/order-tracking">Track Your Order</a></li>
+                <!-- <li><a href="./blog.html">Blog</a></li> -->
+                <br><br>
                 <li><i class="fa fa-envelope"></i> info@feelfit.com</li>
                 <li>Free Shipping on all Order</li>
             </ul>
@@ -195,4 +210,27 @@
         return window.location.href.indexOf($(this).attr('href').trim()) > -1;
     }).click();
 });
+
+
+//Humberger Menu
+$(".humberger__open").on('click', function () {
+        $(".humberger__menu__wrapper").addClass("show__humberger__menu__wrapper");
+        $(".humberger__menu__overlay").addClass("active");
+        $("body").addClass("over_hid");
+    });
+
+    $(".humberger__menu__overlay").on('click', function () {
+        $(".humberger__menu__wrapper").removeClass("show__humberger__menu__wrapper");
+        $(".humberger__menu__overlay").removeClass("active");
+        $("body").removeClass("over_hid");
+    });
+
+    /*------------------
+		Navigation
+	--------------------*/
+    $(".mobile-menu").slicknav({
+        prependTo: '#mobile-menu-wrap',
+        allowParentLinks: true
+    });
+
     </script>

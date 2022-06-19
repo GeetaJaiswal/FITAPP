@@ -6,7 +6,7 @@ app.use(Router);
 let bodyparser = require("body-parser");
 const path = require('path');
 require('dotenv').config();
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 9000;
 const ejs = require('ejs');
 require('./models/db');
 const bcrypt = require('bcryptjs');
